@@ -1,0 +1,32 @@
+# Build outputs and editor state
+.pio/
+.vscode/
+__pycache__/
+.pytest_cache/
+*.pyc
+*.pyo
+*.o
+*.elf
+*.map
+*.hex
+
+# Raw/private captures: never commit vehicle or bench raw logs.
+*.bin
+*.BIN
+*.ld
+tel_*.csv
+MPU6886_*.csv
+data/raw*/
+data/private*/
+data/raw_private_NOT_COMMITTED/
+raw_private_NOT_COMMITTED/
+
+# Allow compact, curated CSV reports.
+!reports/**/*.csv
+!docs/**/*.csv
+
+# Local exports
+*.tmp
+*.log
+*.bak
+*.zip

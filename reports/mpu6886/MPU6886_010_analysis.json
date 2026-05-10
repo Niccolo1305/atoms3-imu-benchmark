@@ -1,0 +1,172 @@
+{
+  "name": "MPU6886_010",
+  "csv": "C:\\Users\\1305n\\Desktop\\esp32-telemetry-clean\\tools\\script\\bias-reports\\MPU6886_010.csv",
+  "rows": 358000,
+  "duration_s": 7159.98,
+  "duration_h": 1.9888833333333331,
+  "fs_mean_hz": 50.0,
+  "plateau_detector": {
+    "method": "earliest post-warmup tail segment with remaining temp span <= threshold",
+    "min_start_s": 600.0,
+    "min_duration_s": 1800.0,
+    "max_temp_span_c": 0.7
+  },
+  "plateau": {
+    "start_s": 1567.1,
+    "end_s": 7159.98,
+    "duration_s": 5592.879999999999,
+    "duration_min": 93.21466666666666,
+    "temp_c": {
+      "mean": 37.14368713629382,
+      "std": 0.11597594405961217,
+      "min": 36.80844553243574,
+      "max": 37.47858017135863,
+      "p05": 36.97368421052632,
+      "p95": 37.36230110159119
+    },
+    "temp_span_c": 0.6701346389228888
+  },
+  "orientation": {
+    "dominant_accel_axis": "y",
+    "dominant_accel_sign": "-",
+    "dominant_accel_value_g": -1.0084730298402886
+  },
+  "accel_g": {
+    "x": {
+      "mean": 0.007568311357927015,
+      "std": 0.0023038545124963454,
+      "min": -0.224609375,
+      "max": 0.0654296875,
+      "p05": 0.00439453125,
+      "p95": 0.0107421875
+    },
+    "y": {
+      "mean": -1.0084730298402886,
+      "std": 0.002084080552037842,
+      "min": -1.09423828125,
+      "max": -0.86767578125,
+      "p05": -1.011474609375,
+      "p95": -1.00537109375
+    },
+    "z": {
+      "mean": 0.029696343871806218,
+      "std": 0.0042668655929972025,
+      "min": -0.328125,
+      "max": 0.27685546875,
+      "p05": 0.025390625,
+      "p95": 0.033935546875
+    }
+  },
+  "gyro_dps": {
+    "x": {
+      "mean": -2.517281300915558,
+      "std": 0.13629740937614074,
+      "min": -6.34765625,
+      "max": 1.46484375,
+      "p05": -2.74658203125,
+      "p95": -2.3193359375
+    },
+    "y": {
+      "mean": -1.5466903787195596,
+      "std": 0.10674287950361411,
+      "min": -2.86865234375,
+      "max": 1.28173828125,
+      "p05": -1.708984375,
+      "p95": -1.40380859375
+    },
+    "z": {
+      "mean": -0.5542084729495208,
+      "std": 0.06667337980855392,
+      "min": -0.8544921875,
+      "max": 2.50244140625,
+      "p05": -0.67138671875,
+      "p95": -0.42724609375
+    }
+  },
+  "gyro_slope_dps_per_h": {
+    "x": -0.10135889235852506,
+    "y": 0.040030289927739056,
+    "z": 0.010567277270570503
+  },
+  "gyro_half_delta_dps": {
+    "x": -0.0895613383996885,
+    "y": 0.029129924428468623,
+    "z": 0.0060824885784839244
+  },
+  "gyro_residual_after_plateau_mean_dps": {
+    "x": {
+      "mean": -2.1140072454447724e-16,
+      "std": 0.1362974093761407,
+      "min": -3.830374949084442,
+      "max": 3.982125050915558,
+      "p05": -0.2293007303344421,
+      "p95": 0.1979453634155579
+    },
+    "y": {
+      "mean": -8.130797097864509e-18,
+      "std": 0.10674287950361411,
+      "min": -1.3219619650304404,
+      "max": 2.8284286599695596,
+      "p05": -0.1622939962804404,
+      "p95": 0.1428817849695596
+    },
+    "z": {
+      "mean": -1.788775361530192e-17,
+      "std": 0.06667337980855392,
+      "min": -0.3002837145504792,
+      "max": 3.056649879199521,
+      "p05": -0.1171782458004792,
+      "p95": 0.1269623791995208
+    }
+  },
+  "decimation_counter_counts_plateau": {
+    "19": 10387,
+    "20": 269233,
+    "21": 25
+  },
+  "diagnostics": {
+    "input": "C:\\Users\\1305n\\Desktop\\esp32-telemetry-clean\\tools\\script\\bias-reports\\MPU6886_010.BIN",
+    "csv": "C:\\Users\\1305n\\Desktop\\esp32-telemetry-clean\\tools\\script\\bias-reports\\MPU6886_010.csv",
+    "file_size": 91648256,
+    "header_ok": true,
+    "header_crc_ok": true,
+    "record_size": 256,
+    "payload_bytes": 91648000,
+    "payload_mod_record_size": 0,
+    "records_valid": 358000,
+    "records_crc_bad": 0,
+    "resync_count": 0,
+    "stray_bytes": 0,
+    "seq_gaps": 0,
+    "seq_drop_estimate": 0,
+    "timestamp_nonmonotonic": 0,
+    "timestamp_gap_drop_estimate": 0,
+    "timestamp_dt_min_us": 19997,
+    "timestamp_dt_max_us": 20003,
+    "timestamp_dt_mean_us": 20000.0,
+    "timestamp_jitter_rms_us": 0.0841986061503893,
+    "sample_fresh_false": 0,
+    "fifo_overrun_records": 0,
+    "fifo_overrun_counter_final": 0,
+    "sd_records_written_final": 358000,
+    "sd_records_dropped_final": 0,
+    "sd_partial_write_count_final": 0,
+    "sd_stall_count_final": 0,
+    "sd_reopen_count_final": 0,
+    "sd_flush_worst_us_final": 50314,
+    "sd_queue_high_watermark_final": 2,
+    "read_error_count_final": 0,
+    "duration_s": 7159.98,
+    "fs_mean_hz": 50.0,
+    "read_error_count_csv_final": 0,
+    "sd_records_dropped_csv_final": 0,
+    "sd_partial_write_count_csv_final": 0,
+    "sd_stall_count_csv_final": 0,
+    "sd_reopen_count_csv_final": 0,
+    "sd_flush_worst_us_csv_final": 50314,
+    "sd_queue_high_watermark_csv_final": 2,
+    "fifo_overrun_count_csv_final": 0,
+    "sample_fresh_false_csv": 0,
+    "fifo_overrun_records_csv": 0
+  }
+}

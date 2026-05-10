@@ -1,0 +1,480 @@
+{
+  "schema_version": 1,
+  "input": "C:\\Users\\1305n\\Desktop\\esp32-telemetry-clean\\tools\\script\\tel_89.csv",
+  "duration_s": 7140.9736,
+  "sampling": {
+    "fs_hz": 49.99000199853436,
+    "method": "median timestamp delta"
+  },
+  "timing_quality": {
+    "status": "FAIL",
+    "note": "69 estimated dropped samples",
+    "sample_count": 356981,
+    "duration_s": 7140.9736,
+    "fs_median_hz": 49.99000199853436,
+    "fs_mean_hz": 49.99038226384144,
+    "dt_median_s": 0.02000400000042646,
+    "dt_mean_s": 0.020003847834612586,
+    "dt_std_s": 0.0012219196309810037,
+    "dt_min_s": 0.012324,
+    "dt_max_s": 0.5199880000000121,
+    "jitter_rms_us": 1221.9196404556183,
+    "jitter_p95_us": 300.99999958110857,
+    "timing_outlier_count": 5,
+    "estimated_dropped_samples": 69,
+    "duplicate_time_count": 0,
+    "fifo_overrun_count": 0,
+    "fifo_backlog_max": 34.0,
+    "imu_sample_fresh_rate": 0.9985741538065052,
+    "mag_sample_fresh_rate": 0.4992898781727879
+  },
+  "thermal_plateau": {
+    "found": true,
+    "start_s": 3185.673363,
+    "end_s": 5417.373359,
+    "duration_s": 2231.6999960000003,
+    "temp_mean_c": 35.5085846680589,
+    "median_abs_slope_c_min": 0.026162209611809373,
+    "start_idx": 159230,
+    "end_idx": 270800,
+    "note": ""
+  },
+  "axis_metrics": {
+    "gyro": {
+      "x": {
+        "mean": 0.06817418963709208,
+        "std": 0.8997562413310158,
+        "rms_noise": 0.8997562413310158,
+        "sample_count": 111571,
+        "shapiro_p": 0.040031753941148294,
+        "shapiro_pass": false,
+        "psd": {
+          "noise_floor": 0.17970663832559852,
+          "spikes_hz": [],
+          "frequency_bin_count": 513
+        },
+        "allan": {
+          "source": "numpy",
+          "tau_count": 50,
+          "tau_min_s": 0.10002000000213229,
+          "tau_max_s": 743.94876001586,
+          "bias_instability": 0.005447844912029805,
+          "bias_tau_s": 743.94876001586,
+          "bias_instability_ci95": {
+            "tau_s": 743.94876001586,
+            "low": 0.00540897620962678,
+            "high": 0.005487280201127801,
+            "n": 37192.0
+          },
+          "random_walk_density": 0.18265880825558897,
+          "random_walk_tau_s": 1.0,
+          "random_walk_ci95": {
+            "tau_s": 1.0602120000226023,
+            "low": 0.12473250730428764,
+            "high": 0.1257723735863566,
+            "n": 111466.0
+          },
+          "min_equivalent_count": 37192.0,
+          "low_confidence_tau_count": 0
+        },
+        "unit": "dps",
+        "psd_unit": "dps/sqrt(Hz)",
+        "random_walk_unit": "dps/sqrt(Hz)",
+        "offset_pass": true,
+        "offset_tolerance": 0.5
+      },
+      "y": {
+        "mean": 0.14461924920454242,
+        "std": 0.9228495140272902,
+        "rms_noise": 0.9228495140272902,
+        "sample_count": 111571,
+        "shapiro_p": 0.00038768346937421717,
+        "shapiro_pass": false,
+        "psd": {
+          "noise_floor": 0.18409816288161907,
+          "spikes_hz": [],
+          "frequency_bin_count": 513
+        },
+        "allan": {
+          "source": "numpy",
+          "tau_count": 50,
+          "tau_min_s": 0.10002000000213229,
+          "tau_max_s": 743.94876001586,
+          "bias_instability": 0.008421568730903864,
+          "bias_tau_s": 743.94876001586,
+          "bias_instability_ci95": {
+            "tau_s": 743.94876001586,
+            "low": 0.008361483421198128,
+            "high": 0.008482529900490114,
+            "n": 37192.0
+          },
+          "random_walk_density": 0.18731663483143188,
+          "random_walk_tau_s": 1.0,
+          "random_walk_ci95": {
+            "tau_s": 1.0602120000226023,
+            "low": 0.12788180205815058,
+            "high": 0.12894792328768764,
+            "n": 111466.0
+          },
+          "min_equivalent_count": 37192.0,
+          "low_confidence_tau_count": 0
+        },
+        "unit": "dps",
+        "psd_unit": "dps/sqrt(Hz)",
+        "random_walk_unit": "dps/sqrt(Hz)",
+        "offset_pass": true,
+        "offset_tolerance": 0.5
+      },
+      "z": {
+        "mean": 0.538829399064273,
+        "std": 0.8829117103505768,
+        "rms_noise": 0.8829117103505768,
+        "sample_count": 111571,
+        "shapiro_p": 0.0012558055208665938,
+        "shapiro_pass": false,
+        "psd": {
+          "noise_floor": 0.1763014444711091,
+          "spikes_hz": [],
+          "frequency_bin_count": 513
+        },
+        "allan": {
+          "source": "numpy",
+          "tau_count": 50,
+          "tau_min_s": 0.10002000000213229,
+          "tau_max_s": 743.94876001586,
+          "bias_instability": 0.006097262283458387,
+          "bias_tau_s": 743.94876001586,
+          "bias_instability_ci95": {
+            "tau_s": 743.94876001586,
+            "low": 0.006053760187309208,
+            "high": 0.006141398506999468,
+            "n": 37192.0
+          },
+          "random_walk_density": 0.17800677004735802,
+          "random_walk_tau_s": 1.0,
+          "random_walk_ci95": {
+            "tau_s": 1.0602120000226023,
+            "low": 0.12172579677716672,
+            "high": 0.12274059680373686,
+            "n": 111466.0
+          },
+          "min_equivalent_count": 37192.0,
+          "low_confidence_tau_count": 0
+        },
+        "unit": "dps",
+        "psd_unit": "dps/sqrt(Hz)",
+        "random_walk_unit": "dps/sqrt(Hz)",
+        "offset_pass": false,
+        "offset_tolerance": 0.5
+      }
+    },
+    "accel": {
+      "x": {
+        "mean": 0.01096757114303896,
+        "std": 0.003510804277003978,
+        "rms_noise": 0.003510804277003978,
+        "sample_count": 111571,
+        "shapiro_p": 0.020682430612871828,
+        "shapiro_pass": false,
+        "psd": {
+          "noise_floor": 0.7022352687626224,
+          "spikes_hz": [],
+          "frequency_bin_count": 513
+        },
+        "allan": {
+          "source": "numpy",
+          "tau_count": 50,
+          "tau_min_s": 0.10002000000213229,
+          "tau_max_s": 743.94876001586,
+          "bias_instability": 4.177434275487169e-05,
+          "bias_tau_s": 743.94876001586,
+          "bias_instability_ci95": {
+            "tau_s": 743.94876001586,
+            "low": 4.1476295632965625e-05,
+            "high": 4.207673449142414e-05,
+            "n": 37192.0
+          },
+          "random_walk_density": 0.0006921986167083617,
+          "random_walk_tau_s": 1.0,
+          "random_walk_ci95": {
+            "tau_s": 1.0602120000226023,
+            "low": 0.0004735124518097632,
+            "high": 0.00047746001642959057,
+            "n": 111466.0
+          },
+          "min_equivalent_count": 37192.0,
+          "low_confidence_tau_count": 0
+        },
+        "unit": "G",
+        "psd_unit": "mg/sqrt(Hz)",
+        "random_walk_unit": "G/sqrt(Hz)",
+        "expected_static_g": 0.0,
+        "static_error_g": 0.01096757114303896,
+        "offset_pass": true,
+        "offset_tolerance_g": 0.02,
+        "dominant_gravity_axis": false
+      },
+      "y": {
+        "mean": 0.0038009533122406363,
+        "std": 0.003135748764882225,
+        "rms_noise": 0.003135748764882225,
+        "sample_count": 111571,
+        "shapiro_p": 0.004556384967035834,
+        "shapiro_pass": false,
+        "psd": {
+          "noise_floor": 0.6258014155164132,
+          "spikes_hz": [],
+          "frequency_bin_count": 513
+        },
+        "allan": {
+          "source": "numpy",
+          "tau_count": 50,
+          "tau_min_s": 0.10002000000213229,
+          "tau_max_s": 743.94876001586,
+          "bias_instability": 5.583762595076926e-05,
+          "bias_tau_s": 743.94876001586,
+          "bias_instability_ci95": {
+            "tau_s": 743.94876001586,
+            "low": 5.54392416169606e-05,
+            "high": 5.624181750861849e-05,
+            "n": 37192.0
+          },
+          "random_walk_density": 0.0006282176757401068,
+          "random_walk_tau_s": 1.0,
+          "random_walk_ci95": {
+            "tau_s": 1.0602120000226023,
+            "low": 0.0004296003853919448,
+            "high": 0.00043318186519370253,
+            "n": 111466.0
+          },
+          "min_equivalent_count": 37192.0,
+          "low_confidence_tau_count": 0
+        },
+        "unit": "G",
+        "psd_unit": "mg/sqrt(Hz)",
+        "random_walk_unit": "G/sqrt(Hz)",
+        "expected_static_g": 0.0,
+        "static_error_g": 0.0038009533122406363,
+        "offset_pass": true,
+        "offset_tolerance_g": 0.02,
+        "dominant_gravity_axis": false
+      },
+      "z": {
+        "mean": 1.0078188693298438,
+        "std": 0.0037832479354215384,
+        "rms_noise": 0.0037832479354215384,
+        "sample_count": 111571,
+        "shapiro_p": 0.003814547114420127,
+        "shapiro_pass": false,
+        "psd": {
+          "noise_floor": 0.7567052620919765,
+          "spikes_hz": [],
+          "frequency_bin_count": 513
+        },
+        "allan": {
+          "source": "numpy",
+          "tau_count": 50,
+          "tau_min_s": 0.10002000000213229,
+          "tau_max_s": 743.94876001586,
+          "bias_instability": 4.4185139340288485e-05,
+          "bias_tau_s": 208.20163200443858,
+          "bias_instability_ci95": {
+            "tau_s": 208.20163200443858,
+            "low": 4.3982807676901556e-05,
+            "high": 4.4389354138779016e-05,
+            "n": 90756.0
+          },
+          "random_walk_density": 0.0007618583659455917,
+          "random_walk_tau_s": 1.0,
+          "random_walk_ci95": {
+            "tau_s": 1.0602120000226023,
+            "low": 0.0005211801751172824,
+            "high": 0.0005255251346045885,
+            "n": 111466.0
+          },
+          "min_equivalent_count": 37192.0,
+          "low_confidence_tau_count": 0
+        },
+        "unit": "G",
+        "psd_unit": "mg/sqrt(Hz)",
+        "random_walk_unit": "G/sqrt(Hz)",
+        "expected_static_g": 1.0,
+        "static_error_g": 0.00781886932984377,
+        "offset_pass": true,
+        "offset_tolerance_g": 0.02,
+        "dominant_gravity_axis": true
+      }
+    },
+    "mag": {
+      "x": {
+        "mean": -11.688814366791561,
+        "std": 0.4746805646501492,
+        "rms_noise": 0.4746805646501492,
+        "sample_count": 55781,
+        "shapiro_p": 7.037173416577342e-38,
+        "shapiro_pass": false,
+        "psd": {
+          "noise_floor": 0.09181057097873123,
+          "spikes_hz": [],
+          "frequency_bin_count": 513
+        },
+        "unit": "uT",
+        "psd_unit": "uT/sqrt(Hz)",
+        "zero_b_pass": true,
+        "zero_b_tolerance_ut": 40.0
+      },
+      "y": {
+        "mean": -75.33667556657285,
+        "std": 1.046296921878467,
+        "rms_noise": 1.046296921878467,
+        "sample_count": 55781,
+        "shapiro_p": 2.479392154462086e-59,
+        "shapiro_pass": false,
+        "psd": {
+          "noise_floor": 0.12016185397437722,
+          "spikes_hz": [],
+          "frequency_bin_count": 513
+        },
+        "unit": "uT",
+        "psd_unit": "uT/sqrt(Hz)",
+        "zero_b_pass": false,
+        "zero_b_tolerance_ut": 40.0
+      },
+      "z": {
+        "mean": -34.868901111399936,
+        "std": 1.148877758892797,
+        "rms_noise": 1.148877758892797,
+        "sample_count": 55781,
+        "shapiro_p": 9.619150844345972e-37,
+        "shapiro_pass": false,
+        "psd": {
+          "noise_floor": 0.15724682529270056,
+          "spikes_hz": [],
+          "frequency_bin_count": 513
+        },
+        "unit": "uT",
+        "psd_unit": "uT/sqrt(Hz)",
+        "zero_b_pass": true,
+        "zero_b_tolerance_ut": 40.0
+      }
+    }
+  },
+  "thermal": {
+    "gyro": {
+      "x": {
+        "slope": null,
+        "intercept": null,
+        "linear_r2": null,
+        "fit_degree": 1,
+        "temp_span_c": null,
+        "sample_count": 1,
+        "unit": "dps/degC",
+        "hysteresis": {
+          "status": "PASS",
+          "temp_overlap_c": 0.7633333333333283,
+          "bin_count": 3,
+          "mean_abs_delta": 0.0033512231193093315,
+          "max_abs_delta": 0.004950300580572831,
+          "note": "cooling minus warming at matched temperature bins"
+        },
+        "slope_pass": false,
+        "slope_tolerance": 0.02
+      },
+      "y": {
+        "slope": null,
+        "intercept": null,
+        "linear_r2": null,
+        "fit_degree": 1,
+        "temp_span_c": null,
+        "sample_count": 1,
+        "unit": "dps/degC",
+        "hysteresis": {
+          "status": "PASS",
+          "temp_overlap_c": 0.7633333333333283,
+          "bin_count": 3,
+          "mean_abs_delta": 0.006229439649571854,
+          "max_abs_delta": 0.01000588069482175,
+          "note": "cooling minus warming at matched temperature bins"
+        },
+        "slope_pass": false,
+        "slope_tolerance": 0.02
+      },
+      "z": {
+        "slope": null,
+        "intercept": null,
+        "linear_r2": null,
+        "fit_degree": 1,
+        "temp_span_c": null,
+        "sample_count": 1,
+        "unit": "dps/degC",
+        "hysteresis": {
+          "status": "PASS",
+          "temp_overlap_c": 0.7633333333333283,
+          "bin_count": 3,
+          "mean_abs_delta": 0.0024744884860644265,
+          "max_abs_delta": 0.005623815809593036,
+          "note": "cooling minus warming at matched temperature bins"
+        },
+        "slope_pass": false,
+        "slope_tolerance": 0.02
+      }
+    },
+    "accel": {
+      "x": {
+        "slope": null,
+        "intercept": null,
+        "linear_r2": null,
+        "fit_degree": 1,
+        "temp_span_c": null,
+        "sample_count": 1,
+        "unit": "G/degC",
+        "hysteresis": {
+          "status": "PASS",
+          "temp_overlap_c": 0.7633333333333283,
+          "bin_count": 3,
+          "mean_abs_delta": 0.00012078419341435681,
+          "max_abs_delta": 0.00015507316669409466,
+          "note": "cooling minus warming at matched temperature bins"
+        }
+      },
+      "y": {
+        "slope": null,
+        "intercept": null,
+        "linear_r2": null,
+        "fit_degree": 1,
+        "temp_span_c": null,
+        "sample_count": 1,
+        "unit": "G/degC",
+        "hysteresis": {
+          "status": "PASS",
+          "temp_overlap_c": 0.7633333333333283,
+          "bin_count": 3,
+          "mean_abs_delta": 2.824899188210679e-05,
+          "max_abs_delta": 4.075611229243433e-05,
+          "note": "cooling minus warming at matched temperature bins"
+        }
+      },
+      "z": {
+        "slope": null,
+        "intercept": null,
+        "linear_r2": null,
+        "fit_degree": 1,
+        "temp_span_c": null,
+        "sample_count": 1,
+        "unit": "G/degC",
+        "hysteresis": {
+          "status": "PASS",
+          "temp_overlap_c": 0.7633333333333283,
+          "bin_count": 3,
+          "mean_abs_delta": 2.0240474673860476e-05,
+          "max_abs_delta": 3.993804775048737e-05,
+          "note": "cooling minus warming at matched temperature bins"
+        }
+      }
+    }
+  },
+  "dashboard_png": "C:\\Users\\1305n\\Desktop\\esp32-telemetry-clean\\tools\\script\\bias-reports\\tel_89_bosch_static_dashboard.png",
+  "warnings": [
+    "timing quality FAIL: 69 estimated dropped samples"
+  ]
+}

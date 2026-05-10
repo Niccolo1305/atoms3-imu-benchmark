@@ -1,0 +1,111 @@
+{
+  "test": "MPU6886_012",
+  "rows": 358250,
+  "duration_h": 1.9902722219444444,
+  "fs_mean_hz": 50.00000000697838,
+  "plateau_start_s": 2054.659999,
+  "plateau_end_s": 7164.979999,
+  "plateau_min": 85.172,
+  "temp_mean_c": 39.138791381894514,
+  "temp_span_c": 0.6946144430844541,
+  "orientation": "+Z",
+  "orientation_axis": "z",
+  "orientation_value_g": 1.0113171085409067,
+  "acc": {
+    "x": {
+      "mean": 0.03259771946436049,
+      "std": 0.0016168296436504075,
+      "min": 0.02490234375,
+      "max": 0.040283203125,
+      "p05": 0.030029296875,
+      "p95": 0.03515625
+    },
+    "y": {
+      "mean": -0.011961788004504103,
+      "std": 0.0015725131114325908,
+      "min": -0.01904296875,
+      "max": -0.003662109375,
+      "p05": -0.0146484375,
+      "p95": -0.00927734375
+    },
+    "z": {
+      "mean": 1.0113171085409067,
+      "std": 0.0015002399262517444,
+      "min": 1.003173828125,
+      "max": 1.020263671875,
+      "p05": 1.0087890625,
+      "p95": 1.013671875
+    }
+  },
+  "gyro": {
+    "x": {
+      "mean": -2.8490278009725136,
+      "std": 0.07759517803295417,
+      "min": -3.35693359375,
+      "max": -2.44140625,
+      "p05": -2.99072265625,
+      "p95": -2.74658203125
+    },
+    "y": {
+      "mean": -1.4704213471791994,
+      "std": 0.09245434531024657,
+      "min": -1.89208984375,
+      "max": -0.9765625,
+      "p05": -1.64794921875,
+      "p95": -1.3427734375
+    },
+    "z": {
+      "mean": -0.546983847943581,
+      "std": 0.05861318844012221,
+      "min": -0.79345703125,
+      "max": -0.30517578125,
+      "p05": -0.6103515625,
+      "p95": -0.42724609375
+    }
+  },
+  "gyro_slope_dps_h": {
+    "x": -0.018877009217088694,
+    "y": 0.12707934934608123,
+    "z": 0.01047454931340193
+  },
+  "gyro_half_delta_dps": {
+    "x": -0.012402245492996844,
+    "y": 0.08980915188342009,
+    "z": 0.006800589523779266
+  },
+  "diagnostics": {
+    "input": "C:\\Users\\1305n\\Desktop\\esp32-telemetry-clean\\tools\\script\\bias-reports\\MPU6886_012.BIN",
+    "csv": "C:\\Users\\1305n\\Desktop\\esp32-telemetry-clean\\tools\\script\\bias-reports\\MPU6886_012.csv",
+    "file_size": 91712256,
+    "header_ok": true,
+    "header_crc_ok": true,
+    "record_size": 256,
+    "payload_bytes": 91712000,
+    "payload_mod_record_size": 0,
+    "records_valid": 358250,
+    "records_crc_bad": 0,
+    "resync_count": 0,
+    "stray_bytes": 0,
+    "seq_gaps": 0,
+    "seq_drop_estimate": 0,
+    "timestamp_nonmonotonic": 0,
+    "timestamp_gap_drop_estimate": 0,
+    "timestamp_dt_min_us": 19998,
+    "timestamp_dt_max_us": 20002,
+    "timestamp_dt_mean_us": 19999.999997208644,
+    "timestamp_jitter_rms_us": 0.10536231446655037,
+    "sample_fresh_false": 0,
+    "fifo_overrun_records": 0,
+    "fifo_overrun_counter_final": 0,
+    "sd_records_written_final": 358250,
+    "sd_records_dropped_final": 0,
+    "sd_partial_write_count_final": 0,
+    "sd_stall_count_final": 0,
+    "sd_reopen_count_final": 0,
+    "sd_flush_worst_us_final": 52900,
+    "sd_queue_high_watermark_final": 2,
+    "read_error_count_final": 0,
+    "duration_s": 7164.979999,
+    "fs_mean_hz": 50.00000000697838
+  }
+}

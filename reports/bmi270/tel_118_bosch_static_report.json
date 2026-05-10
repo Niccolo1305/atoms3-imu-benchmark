@@ -1,0 +1,633 @@
+{
+  "schema_version": 1,
+  "input": "C:\\Users\\1305n\\Desktop\\esp32-telemetry-clean\\tools\\script\\bias-reports\\tel_118.csv",
+  "duration_s": 7147.529707,
+  "sampling": {
+    "fs_hz": 49.99500050000809,
+    "method": "median timestamp delta"
+  },
+  "timing_quality": {
+    "status": "FAIL",
+    "note": "129 estimated dropped samples",
+    "sample_count": 357249,
+    "duration_s": 7147.529707,
+    "fs_median_hz": 49.99500050000809,
+    "fs_mean_hz": 49.98202381028593,
+    "dt_median_s": 0.02000199999997676,
+    "dt_mean_s": 0.020007193061962556,
+    "dt_std_s": 0.0015795514299588892,
+    "dt_min_s": 0.009939,
+    "dt_max_s": 0.5198820000000524,
+    "jitter_rms_us": 1579.559966502684,
+    "jitter_p95_us": 289.9999999499414,
+    "timing_outlier_count": 9,
+    "estimated_dropped_samples": 129,
+    "duplicate_time_count": 0,
+    "fifo_overrun_count": 0,
+    "fifo_backlog_max": 21.0,
+    "imu_sample_fresh_rate": 0.9986088134606395,
+    "mag_sample_fresh_rate": 0.4993016075622325
+  },
+  "thermal_plateau": {
+    "found": true,
+    "start_s": 5776.469707,
+    "end_s": 6836.409711,
+    "duration_s": 1059.940004,
+    "temp_mean_c": 35.568537077930664,
+    "median_abs_slope_c_min": 0.022431090225792066,
+    "start_idx": 288710,
+    "end_idx": 341692,
+    "note": ""
+  },
+  "axis_metrics": {
+    "gyro": {
+      "x": {
+        "mean": 0.21303260358983067,
+        "std": 0.034823363970610935,
+        "rms_noise": 0.034823363970610935,
+        "sample_count": 52983,
+        "shapiro_p": 4.0958340522849823e-66,
+        "shapiro_pass": false,
+        "psd": {
+          "noise_floor": 0.007346572195105729,
+          "spikes_hz": [],
+          "frequency_bin_count": 513,
+          "slope_loglog": -0.11296055192316078,
+          "spectral_flatness": 0.9817160195107997,
+          "strong_peak_count": 0,
+          "whiteness_rating": "WHITE"
+        },
+        "snr": {
+          "linear": 6.117519369168896,
+          "db": 15.731507061612142,
+          "rating": "FAIR",
+          "definition": "abs(mean_plateau)/std_plateau"
+        },
+        "allan": {
+          "source": "allantools",
+          "tau_count": 50,
+          "tau_min_s": 0.1000099999998838,
+          "tau_max_s": 353.25532199958957,
+          "bias_instability": 0.0013001119818937862,
+          "bias_tau_s": 34.22342199996024,
+          "bias_instability_ci95": {
+            "tau_s": 34.22342199996024,
+            "low": 0.0012920688659521105,
+            "high": 0.001308256563390579,
+            "n": 49562.0
+          },
+          "random_walk_density": 0.007880804669015362,
+          "random_walk_tau_s": 1.0,
+          "random_walk_ci95": {
+            "tau_s": 1.0401039999987916,
+            "low": 0.005436734344281027,
+            "high": 0.0055026638128746,
+            "n": 52880.0
+          },
+          "min_equivalent_count": 17662.0,
+          "low_confidence_tau_count": 0
+        },
+        "unit": "dps",
+        "psd_unit": "dps/sqrt(Hz)",
+        "random_walk_unit": "dps/sqrt(Hz)",
+        "offset_pass": true,
+        "offset_tolerance": 0.5,
+        "residual_stability": {
+          "mean_removed": 0.21303260358983067,
+          "residual_std_dps": 0.034823363970610935,
+          "residual_slope_dps_per_h": -0.013068096610268682,
+          "angle_final_deg": 0.0014532013567779669,
+          "angle_p2p_deg": 0.9624865574663025,
+          "roll60": {
+            "window_samples": 3000,
+            "sample_count": 51984,
+            "std": 0.0022280262038782894,
+            "p2p": 0.009969181333333334,
+            "max_abs": 0.005655600589830678
+          },
+          "roll300": {
+            "window_samples": 14999,
+            "sample_count": 47985,
+            "std": 0.0018077178908858197,
+            "p2p": 0.005212807387159144,
+            "max_abs": 0.0029241548607326934
+          }
+        }
+      },
+      "y": {
+        "mean": 0.002043600588868127,
+        "std": 0.035268093554045386,
+        "rms_noise": 0.035268093554045386,
+        "sample_count": 52983,
+        "shapiro_p": 7.967886974528448e-66,
+        "shapiro_pass": false,
+        "psd": {
+          "noise_floor": 0.007422974687612406,
+          "spikes_hz": [],
+          "frequency_bin_count": 513,
+          "slope_loglog": -0.11146379877034,
+          "spectral_flatness": 0.9811602209556196,
+          "strong_peak_count": 0,
+          "whiteness_rating": "WHITE"
+        },
+        "snr": {
+          "linear": 0.05794474219981528,
+          "db": -24.7397193000306,
+          "rating": "POOR",
+          "definition": "abs(mean_plateau)/std_plateau"
+        },
+        "allan": {
+          "source": "allantools",
+          "tau_count": 50,
+          "tau_min_s": 0.1000099999998838,
+          "tau_max_s": 353.25532199958957,
+          "bias_instability": 0.0015077868420307174,
+          "bias_tau_s": 34.22342199996024,
+          "bias_instability_ci95": {
+            "tau_s": 34.22342199996024,
+            "low": 0.0014984589498532137,
+            "high": 0.0015172324074787208,
+            "n": 49562.0
+          },
+          "random_walk_density": 0.007829123088377625,
+          "random_walk_tau_s": 1.0,
+          "random_walk_ci95": {
+            "tau_s": 1.0401039999987916,
+            "low": 0.005396684085997422,
+            "high": 0.005462127878433496,
+            "n": 52880.0
+          },
+          "min_equivalent_count": 17662.0,
+          "low_confidence_tau_count": 0
+        },
+        "unit": "dps",
+        "psd_unit": "dps/sqrt(Hz)",
+        "random_walk_unit": "dps/sqrt(Hz)",
+        "offset_pass": true,
+        "offset_tolerance": 0.5,
+        "residual_stability": {
+          "mean_removed": 0.002043600588868127,
+          "residual_std_dps": 0.035268093554045386,
+          "residual_slope_dps_per_h": 0.036870148158403095,
+          "angle_final_deg": 0.009084619292610997,
+          "angle_p2p_deg": 1.7088204631674337,
+          "roll60": {
+            "window_samples": 3000,
+            "sample_count": 51984,
+            "std": 0.003680512012058993,
+            "p2p": 0.01367184,
+            "max_abs": 0.007925449411131873
+          },
+          "roll300": {
+            "window_samples": 14999,
+            "sample_count": 47985,
+            "std": 0.002975426515180024,
+            "p2p": 0.009312554296429212,
+            "max_abs": 0.004804982983370024
+          }
+        }
+      },
+      "z": {
+        "mean": 0.5420482939810882,
+        "std": 0.03325208415953353,
+        "rms_noise": 0.03325208415953353,
+        "sample_count": 52983,
+        "shapiro_p": 2.1348911840590067e-68,
+        "shapiro_pass": false,
+        "psd": {
+          "noise_floor": 0.00694716106371604,
+          "spikes_hz": [],
+          "frequency_bin_count": 513,
+          "slope_loglog": -0.11110202875627212,
+          "spectral_flatness": 0.9815218100444647,
+          "strong_peak_count": 0,
+          "whiteness_rating": "WHITE"
+        },
+        "snr": {
+          "linear": 16.301182547851827,
+          "db": 24.244382217377204,
+          "rating": "FAIR",
+          "definition": "abs(mean_plateau)/std_plateau"
+        },
+        "allan": {
+          "source": "allantools",
+          "tau_count": 50,
+          "tau_min_s": 0.1000099999998838,
+          "tau_max_s": 353.25532199958957,
+          "bias_instability": 0.0015029807444393566,
+          "bias_tau_s": 56.44564399993442,
+          "bias_instability_ci95": {
+            "tau_s": 56.44564399993442,
+            "low": 0.0014934682492864636,
+            "high": 0.0015126160435864032,
+            "n": 47340.0
+          },
+          "random_walk_density": 0.007333470032933277,
+          "random_walk_tau_s": 1.0,
+          "random_walk_ci95": {
+            "tau_s": 1.0401039999987916,
+            "low": 0.005045202291939809,
+            "high": 0.0051063837815972105,
+            "n": 52880.0
+          },
+          "min_equivalent_count": 17662.0,
+          "low_confidence_tau_count": 0
+        },
+        "unit": "dps",
+        "psd_unit": "dps/sqrt(Hz)",
+        "random_walk_unit": "dps/sqrt(Hz)",
+        "offset_pass": false,
+        "offset_tolerance": 0.5,
+        "residual_stability": {
+          "mean_removed": 0.5420482939810882,
+          "residual_std_dps": 0.033252084159533526,
+          "residual_slope_dps_per_h": 0.04902719637429594,
+          "angle_final_deg": 0.001977338989135664,
+          "angle_p2p_deg": 1.9257453159614835,
+          "roll60": {
+            "window_samples": 3000,
+            "sample_count": 51984,
+            "std": 0.0043389620841603384,
+            "p2p": 0.018086815333333332,
+            "max_abs": 0.010310329981088202
+          },
+          "roll300": {
+            "window_samples": 14999,
+            "sample_count": 47985,
+            "std": 0.0037197228058108863,
+            "p2p": 0.01266650014034549,
+            "max_abs": 0.007815814989491562
+          }
+        }
+      }
+    },
+    "accel": {
+      "x": {
+        "mean": -0.004186924504086216,
+        "std": 0.0005085768317813373,
+        "rms_noise": 0.0005085768317813373,
+        "sample_count": 52983,
+        "shapiro_p": 7.586889645401047e-26,
+        "shapiro_pass": false,
+        "psd": {
+          "noise_floor": 0.1055589996968022,
+          "spikes_hz": [],
+          "frequency_bin_count": 513,
+          "slope_loglog": -0.08429667961335774,
+          "spectral_flatness": 0.9851901640096566,
+          "strong_peak_count": 0,
+          "whiteness_rating": "WHITE"
+        },
+        "snr": {
+          "linear": 8.232629255684193,
+          "db": 18.310771160809125,
+          "rating": "FAIR",
+          "definition": "abs(mean_plateau)/std_plateau"
+        },
+        "allan": {
+          "source": "allantools",
+          "tau_count": 50,
+          "tau_min_s": 0.1000099999998838,
+          "tau_max_s": 353.25532199958957,
+          "bias_instability": 3.3749989451335574e-05,
+          "bias_tau_s": 78.76787599990848,
+          "bias_instability_ci95": {
+            "tau_s": 78.76787599990848,
+            "low": 3.353119600894039e-05,
+            "high": 3.397167695749313e-05,
+            "n": 45108.0
+          },
+          "random_walk_density": 0.00011330885575284506,
+          "random_walk_tau_s": 1.0,
+          "random_walk_ci95": {
+            "tau_s": 1.0401039999987916,
+            "low": 7.826588580187918e-05,
+            "high": 7.921499015996706e-05,
+            "n": 52880.0
+          },
+          "min_equivalent_count": 17662.0,
+          "low_confidence_tau_count": 0
+        },
+        "unit": "G",
+        "psd_unit": "mg/sqrt(Hz)",
+        "random_walk_unit": "G/sqrt(Hz)",
+        "expected_static_g": 0.0,
+        "static_error_g": -0.004186924504086216,
+        "offset_pass": true,
+        "offset_tolerance_g": 0.02,
+        "dominant_gravity_axis": false
+      },
+      "y": {
+        "mean": -1.012672779344318,
+        "std": 0.0006015899268525816,
+        "rms_noise": 0.0006015899268525816,
+        "sample_count": 52983,
+        "shapiro_p": 1.569359339203479e-21,
+        "shapiro_pass": false,
+        "psd": {
+          "noise_floor": 0.12565179905436746,
+          "spikes_hz": [],
+          "frequency_bin_count": 513,
+          "slope_loglog": -0.07994446970044838,
+          "spectral_flatness": 0.9846512520320431,
+          "strong_peak_count": 0,
+          "whiteness_rating": "WHITE"
+        },
+        "snr": {
+          "linear": 1683.3273533060194,
+          "db": 64.52337161137629,
+          "rating": "EXCELLENT",
+          "definition": "abs(mean_plateau)/std_plateau"
+        },
+        "allan": {
+          "source": "allantools",
+          "tau_count": 50,
+          "tau_min_s": 0.1000099999998838,
+          "tau_max_s": 353.25532199958957,
+          "bias_instability": 1.929170894932892e-05,
+          "bias_tau_s": 181.31812999978933,
+          "bias_instability_ci95": {
+            "tau_s": 181.31812999978933,
+            "low": 1.914956073585788e-05,
+            "high": 1.9435998132126897e-05,
+            "n": 34854.0
+          },
+          "random_walk_density": 0.00013479187276586692,
+          "random_walk_tau_s": 1.0,
+          "random_walk_ci95": {
+            "tau_s": 1.0401039999987916,
+            "low": 9.311022615494572e-05,
+            "high": 9.423934288978864e-05,
+            "n": 52880.0
+          },
+          "min_equivalent_count": 17662.0,
+          "low_confidence_tau_count": 0
+        },
+        "unit": "G",
+        "psd_unit": "mg/sqrt(Hz)",
+        "random_walk_unit": "G/sqrt(Hz)",
+        "expected_static_g": -1.0,
+        "static_error_g": -0.012672779344317986,
+        "offset_pass": true,
+        "offset_tolerance_g": 0.02,
+        "dominant_gravity_axis": true
+      },
+      "z": {
+        "mean": 0.052528523922767675,
+        "std": 0.000688026646186877,
+        "rms_noise": 0.000688026646186877,
+        "sample_count": 52983,
+        "shapiro_p": 1.5577537220076192e-19,
+        "shapiro_pass": false,
+        "psd": {
+          "noise_floor": 0.14429669707011192,
+          "spikes_hz": [],
+          "frequency_bin_count": 513,
+          "slope_loglog": -0.07597616669198903,
+          "spectral_flatness": 0.9854328054792827,
+          "strong_peak_count": 0,
+          "whiteness_rating": "WHITE"
+        },
+        "snr": {
+          "linear": 76.34664182541012,
+          "db": 37.65579877971036,
+          "rating": "GOOD",
+          "definition": "abs(mean_plateau)/std_plateau"
+        },
+        "allan": {
+          "source": "allantools",
+          "tau_count": 50,
+          "tau_min_s": 0.1000099999998838,
+          "tau_max_s": 353.25532199958957,
+          "bias_instability": 1.3630448617004868e-05,
+          "bias_tau_s": 353.25532199958957,
+          "bias_instability_ci95": {
+            "tau_s": 353.25532199958957,
+            "low": 1.3489784589762286e-05,
+            "high": 1.3774097897963359e-05,
+            "n": 17662.0
+          },
+          "random_walk_density": 0.00014991340022313138,
+          "random_walk_tau_s": 1.0,
+          "random_walk_ci95": {
+            "tau_s": 1.0401039999987916,
+            "low": 0.00010316104030373656,
+            "high": 0.00010441203991785968,
+            "n": 52880.0
+          },
+          "min_equivalent_count": 17662.0,
+          "low_confidence_tau_count": 0
+        },
+        "unit": "G",
+        "psd_unit": "mg/sqrt(Hz)",
+        "random_walk_unit": "G/sqrt(Hz)",
+        "expected_static_g": 0.0,
+        "static_error_g": 0.052528523922767675,
+        "offset_pass": false,
+        "offset_tolerance_g": 0.02,
+        "dominant_gravity_axis": false
+      }
+    },
+    "mag": {
+      "x": {
+        "mean": -66.91989600196361,
+        "std": 0.43470992664227076,
+        "rms_noise": 0.43470992664227076,
+        "sample_count": 26482,
+        "shapiro_p": 3.6577900776701524e-40,
+        "shapiro_pass": false,
+        "psd": {
+          "noise_floor": 0.08503137217833659,
+          "spikes_hz": [],
+          "frequency_bin_count": 513,
+          "slope_loglog": -0.07609022447502693,
+          "spectral_flatness": 0.984142956802312,
+          "strong_peak_count": 0,
+          "whiteness_rating": "WHITE"
+        },
+        "snr": {
+          "linear": 153.94149500761915,
+          "db": 43.74711399816633,
+          "rating": "EXCELLENT",
+          "definition": "abs(mean_plateau)/std_plateau"
+        },
+        "unit": "uT",
+        "psd_unit": "uT/sqrt(Hz)",
+        "zero_b_pass": false,
+        "zero_b_tolerance_ut": 40.0
+      },
+      "y": {
+        "mean": -75.94418650513556,
+        "std": 1.0654112437920698,
+        "rms_noise": 1.0654112437920698,
+        "sample_count": 26482,
+        "shapiro_p": 8.39317824587359e-60,
+        "shapiro_pass": false,
+        "psd": {
+          "noise_floor": 0.12239178076839757,
+          "spikes_hz": [],
+          "frequency_bin_count": 513,
+          "slope_loglog": -0.3234491165501533,
+          "spectral_flatness": 0.499109621527678,
+          "strong_peak_count": 0,
+          "whiteness_rating": "FAIR"
+        },
+        "snr": {
+          "linear": 71.28157033037391,
+          "db": 37.05954517251352,
+          "rating": "GOOD",
+          "definition": "abs(mean_plateau)/std_plateau"
+        },
+        "unit": "uT",
+        "psd_unit": "uT/sqrt(Hz)",
+        "zero_b_pass": false,
+        "zero_b_tolerance_ut": 40.0
+      },
+      "z": {
+        "mean": -65.97814923415906,
+        "std": 1.1533532466572622,
+        "rms_noise": 1.1533532466572622,
+        "sample_count": 26482,
+        "shapiro_p": 4.990689281118133e-36,
+        "shapiro_pass": false,
+        "psd": {
+          "noise_floor": 0.1547033189728719,
+          "spikes_hz": [],
+          "frequency_bin_count": 513,
+          "slope_loglog": -0.03420419098815912,
+          "spectral_flatness": 0.7013447686201405,
+          "strong_peak_count": 0,
+          "whiteness_rating": "WHITE"
+        },
+        "snr": {
+          "linear": 57.20550007153667,
+          "db": 35.14875572826794,
+          "rating": "GOOD",
+          "definition": "abs(mean_plateau)/std_plateau"
+        },
+        "unit": "uT",
+        "psd_unit": "uT/sqrt(Hz)",
+        "zero_b_pass": false,
+        "zero_b_tolerance_ut": 40.0
+      }
+    }
+  },
+  "thermal": {
+    "gyro": {
+      "x": {
+        "slope": 0.004587963080186815,
+        "intercept": 0.016158003151294533,
+        "linear_r2": 0.06995379460990703,
+        "fit_degree": 1,
+        "temp_span_c": 10.841133333333339,
+        "sample_count": 354019,
+        "unit": "dps/degC",
+        "hysteresis": {
+          "status": "PASS",
+          "temp_overlap_c": 2.0833333333333286,
+          "bin_count": 10,
+          "mean_abs_delta": 0.0004489757445777759,
+          "max_abs_delta": 0.001827982762276692,
+          "note": "cooling minus warming at matched temperature bins"
+        },
+        "slope_pass": true,
+        "slope_tolerance": 0.02
+      },
+      "y": {
+        "slope": -0.04403452017644357,
+        "intercept": 1.571213679528914,
+        "linear_r2": 0.9195690668733718,
+        "fit_degree": 1,
+        "temp_span_c": 10.841133333333339,
+        "sample_count": 354019,
+        "unit": "dps/degC",
+        "hysteresis": {
+          "status": "PASS",
+          "temp_overlap_c": 2.0833333333333286,
+          "bin_count": 10,
+          "mean_abs_delta": 0.0015853548661430579,
+          "max_abs_delta": 0.007024386672637564,
+          "note": "cooling minus warming at matched temperature bins"
+        },
+        "slope_pass": false,
+        "slope_tolerance": 0.02
+      },
+      "z": {
+        "slope": 0.008986882475036222,
+        "intercept": 0.22615049841137574,
+        "linear_r2": 0.31464170240576583,
+        "fit_degree": 1,
+        "temp_span_c": 10.841133333333339,
+        "sample_count": 354019,
+        "unit": "dps/degC",
+        "hysteresis": {
+          "status": "PASS",
+          "temp_overlap_c": 2.0833333333333286,
+          "bin_count": 10,
+          "mean_abs_delta": 0.0007112734877841697,
+          "max_abs_delta": 0.0016482797567346497,
+          "note": "cooling minus warming at matched temperature bins"
+        },
+        "slope_pass": true,
+        "slope_tolerance": 0.02
+      }
+    },
+    "accel": {
+      "x": {
+        "slope": -3.92202388263436e-05,
+        "intercept": -0.0030497497212942726,
+        "linear_r2": 0.1206437409445208,
+        "fit_degree": 1,
+        "temp_span_c": 10.841133333333339,
+        "sample_count": 354019,
+        "unit": "G/degC",
+        "hysteresis": {
+          "status": "PASS",
+          "temp_overlap_c": 2.0833333333333286,
+          "bin_count": 10,
+          "mean_abs_delta": 6.566161297021436e-06,
+          "max_abs_delta": 2.7093611684828392e-05,
+          "note": "cooling minus warming at matched temperature bins"
+        }
+      },
+      "y": {
+        "slope": -0.00023360273655087988,
+        "intercept": -1.0044852840994667,
+        "linear_r2": 0.9000933063849555,
+        "fit_degree": 1,
+        "temp_span_c": 10.841133333333339,
+        "sample_count": 354019,
+        "unit": "G/degC",
+        "hysteresis": {
+          "status": "PASS",
+          "temp_overlap_c": 2.0833333333333286,
+          "bin_count": 10,
+          "mean_abs_delta": 1.3347245119676998e-05,
+          "max_abs_delta": 9.135383059066804e-05,
+          "note": "cooling minus warming at matched temperature bins"
+        }
+      },
+      "z": {
+        "slope": -0.0003894013423032923,
+        "intercept": 0.0662835430944576,
+        "linear_r2": 0.9427643940737858,
+        "fit_degree": 1,
+        "temp_span_c": 10.841133333333339,
+        "sample_count": 354019,
+        "unit": "G/degC",
+        "hysteresis": {
+          "status": "PASS",
+          "temp_overlap_c": 2.0833333333333286,
+          "bin_count": 10,
+          "mean_abs_delta": 1.682981036998793e-05,
+          "max_abs_delta": 5.317455790198461e-05,
+          "note": "cooling minus warming at matched temperature bins"
+        }
+      }
+    }
+  },
+  "dashboard_png": "C:\\Users\\1305n\\Desktop\\esp32-telemetry-clean\\tools\\script\\bias-reports\\tel_118_bosch_static_dashboard.png",
+  "warnings": [
+    "timing quality FAIL: 129 estimated dropped samples"
+  ]
+}
