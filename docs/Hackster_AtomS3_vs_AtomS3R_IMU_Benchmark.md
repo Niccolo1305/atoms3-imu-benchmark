@@ -180,8 +180,7 @@ python .\scripts\build_atom_runtime_comparison.py
 
 Start here:
 
-<!-- Replace TODO_ADD_GITHUB_URL with the final GitHub repository URL before publishing. -->
-- GitHub repository: [GitHub repo](TODO_ADD_GITHUB_URL)
+- GitHub repository: [GitHub repo](https://github.com/Niccolo1305/atoms3-imu-benchmark)
 - Full technical whitepaper: `docs/AtomS3_vs_AtomS3R_Sensor_Bench_Whitepaper.md`
 
 ## Code and Data Availability
