@@ -23,7 +23,7 @@
 
 ## Gyro Plateau
 
-| Axis | Mean 117 | Mean 123 | Delta mean | Std 117 | Std 123 | ARW 117 | ARW 123 | PSD 117 | PSD 123 |
+| Axis | Mean 117 | Mean 123 | Delta mean | Std 117 | Std 123 | Rate noise density 117 | Rate noise density 123 | PSD 117 | PSD 123 |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
 | X | +0.146718 | +0.207995 | +0.061277 | 0.034616 | 0.034732 | 0.007560 | 0.007715 | 0.007343 | 0.007338 |
 | Y | +0.018442 | -0.007407 | -0.025849 | 0.036237 | 0.035378 | 0.008035 | 0.007996 | 0.007551 | 0.007525 |
@@ -56,5 +56,5 @@
 - Sensor FIFO health still looks good: `fifo_overrun_count = 0`; `sd_records_dropped = 0` in tel_123, so the missing records likely occur before or outside the SD queue-drop counter path.
 - tel_123 repeats the +Z orientation well: accel Z differs from tel_117 by about -0.00008 g.
 - Gyro bias repeatability is good enough for our purpose: X/Y/Z shifted by +0.061 / -0.026 / -0.067 dps, far smaller than MPU6886 same-face DLPF repeat on X/Y.
-- Noise and ARW remain essentially unchanged; PSD remains WHITE on all gyro axes.
+- Noise and rate noise density remain essentially unchanged; PSD remains WHITE on all gyro axes.
 - ZARU is active about 99.95-99.98% of the plateau and final `gx/gy/gz` stay centered near zero with about 0.006 dps std.

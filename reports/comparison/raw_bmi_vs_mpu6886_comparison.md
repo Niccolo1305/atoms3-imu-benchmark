@@ -5,7 +5,7 @@ Scope: BMI270 raw/downsampled static-orientation set versus MPU6886 FIFO high-ba
 | Metric | BMI270 raw/downsampled | MPU6886 raw/high-bandwidth | Read |
 |---|---:|---:|---|
 | Gyro std avg XYZ (dps) | 0.9012 mean across axes/tests | 0.1208 / 0.1045 / 0.0605 | MPU6886 has much lower instantaneous raw gyro sample noise. |
-| Gyro PSD floor / ARW approx (dps/sqrtHz) | 0.1798 PSD floor, 0.1805 ARW | 0.0212 / 0.0176 / 0.0120 PSD floor | MPU6886 raw noise floor is lower in these logs. |
+| Gyro PSD floor / rate-noise-density field (dps/sqrtHz) | 0.1798 PSD floor, 0.1805 rate-noise-density field | 0.0212 / 0.0176 / 0.0120 PSD floor | MPU6886 raw noise floor is lower in these logs. |
 | Gyro PSD whiteness | 27/27 axes WHITE | 18/18 axes WHITE | Both are predominantly white-noise limited at sample level. |
 | Gyro bias envelope (dps) | X/Y small, Z around +0.53 mean in raw set | X -5.09..-2.52, Y -3.22..-1.55, Z -0.79..-0.41 | MPU6886 loses badly on raw X/Y bias magnitude. |
 | Accel std avg (mg) | 3.978 | 1.830 / 1.660 / 1.991 | MPU6886 raw accel appears quieter than BMI raw; BMI ODR/LPF remains the practical path. |

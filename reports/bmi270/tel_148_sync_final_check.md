@@ -37,7 +37,7 @@ ignored 41,504,512 empty bytes and decoded a logical payload of 92,713,216 B:
 | Plateau temp mean | 36.69 C |
 | Orientation | +Z |
 
-| Axis | Gyro mean dps | Gyro std dps | ARW dps/sqrtHz | Acc mean g | Acc std mg |
+| Axis | Gyro mean dps | Gyro std dps | Rate noise density dps/sqrtHz | Acc mean g | Acc std mg |
 |---|---:|---:|---:|---:|---:|
 | X | +0.12617 | 0.03368 | 0.00740 | +0.02693 | 0.554 |
 | Y | +0.00435 | 0.04371 | 0.00881 | +0.00253 | 0.552 |

@@ -6,9 +6,9 @@ Living update: 2026-04-30
 
 This whitepaper summarizes a static sensor-bench comparison between one
 M5Stack AtomS3 unit using MPU6886 and one M5Stack AtomS3R unit using
-BMI270 + BMM150. The goal is not a population-level MEMS qualification; it is
-an engineering evidence package for selecting the safer IMU path for the
-current vehicle ESKF pipeline.
+BMI270 + BMM150. The goal is not a population-level MEMS qualification or a
+generic winner/loser review; it is an engineering evidence package for
+selecting the safer IMU operating path for the current vehicle ESKF pipeline.
 
 The current evidence favors AtomS3R/BMI270 for this pipeline. The main BMI270
 sensor behavior is characterized by the longer ODR50/LPF static plateau logs,
@@ -21,10 +21,10 @@ bias. A fixed DLPF20 +Z bias from `MPU6886_014` applied to the same-face repeat
 `MPU6886_017` leaves +1.293 / +1.829 dps residual X/Y bias, which makes
 per-boot/runtime bias estimation mandatory for any serious MPU6886 path.
 
-The conclusion is therefore scoped and practical: for the tested devices and
-firmware paths, AtomS3R/BMI270 is the preferred production IMU direction. The
-report does not claim that every MPU6886 unit is categorically worse than every
-BMI270 unit.
+The conclusion is therefore scoped and practical: for this specific
+vehicle-telemetry and ESKF-input use case, AtomS3R/BMI270 provided the cleaner
+and more practical operating path. The report does not claim that every MPU6886
+unit is categorically worse than every BMI270 unit.
 
 ## 1. Executive Summary
 
@@ -85,7 +85,7 @@ orientations collected so far.
 
 | ID | Artifact | Role |
 | --- | --- | --- |
-| B1 | `tools/script/bias-reports/static-orientations-odr50/orientamenti_statici_odr50_summary.md` | Current BMI270 ODR50 / LPF20 static summary. |
+| B1 | `reports/bmi270/bmi270_odr50_lpf20_static_summary.md` | Current BMI270 ODR50 / LPF20 static summary. |
 | B2 | `tools/script/bias-reports/static-orientations-odr50/orientamenti_statici_odr50_summary.csv` | Machine-readable BMI270 ODR50 summary. |
 | B3 | `tools/script/bias-reports/tel_116_bosch_static_report.json` | BMI270 ODR50, gravity on +X (`usb-c-up`). |
 | B4 | `tools/script/bias-reports/tel_117_bosch_static_report.json` | BMI270 ODR50, gravity on +Z (`su`). |
@@ -214,7 +214,7 @@ repeatable rather than visually estimated from plots.
 | Residual drift | Linear fit slope of gyro samples inside the plateau, or equivalent residual stability metric after subtracting plateau mean. | dps/h | Slow bias movement while temperature is approximately stable. |
 | White-noise check | Welch PSD on plateau samples after subtracting the plateau mean. The PSD is evaluated over the valid in-band region, excluding DC; reported checks include log-log PSD slope, spectral flatness, and absence of strong narrow peaks. | dps/sqrtHz | Determines whether the noise behaves like broad white noise rather than drift or tonal interference. |
 | PSD noise floor | Square root of the median Welch PSD in-band. For BMI270 this is emitted by the Bosch validator; for MPU6886 it is computed offline with the same Welch/FFT concept on the six-face plateau windows. | dps/sqrtHz | Frequency-domain noise amplitude, comparable only within the same bandwidth/acquisition track. |
-| ARW | Allan-derived random-walk density where available. In the BMI270 validator this is reported directly. For MPU6886 raw comparison, PSD floor is used as the current frequency-domain proxy. | dps/sqrtHz | Random-walk contribution from white gyro noise. |
+| Rate noise density / ARW-like field | The Bosch/BMI validator reports this field as ARW, but the units used here are `dps/sqrtHz`; throughout this document it should be read as gyro rate noise density unless explicitly converted to navigation-style angle random walk. For MPU6886 raw comparison, PSD floor is used as the current frequency-domain proxy. | dps/sqrtHz | White-rate-noise contribution, comparable only within the same bandwidth/acquisition track. |
 
 Important measurement constraints:
 
@@ -274,7 +274,7 @@ The validator uses only these physical BMI columns for BMI characterization:
 
 The current ODR50/LPF20 set covers three independent gravity axes:
 
-| Test | Orientation | Dominant Gravity | Plateau | Gyro Std XYZ (dps) | ARW XYZ (dps/sqrtHz) | ZARU Active |
+| Test | Orientation | Dominant Gravity | Plateau | Gyro Std XYZ (dps) | Rate noise density XYZ (dps/sqrtHz) | ZARU Active |
 | --- | --- | ---: | ---: | ---: | ---: | ---: |
 | `tel_116` | `usb-c-up` | X +0.9967 g | 20.4 min @ 34.8 degC | 0.0341, 0.0351, 0.0336 | 0.0074, 0.0078, 0.0076 | 99.96% |
 | `tel_117` | `su` | Z +1.0082 g | 50.0 min @ 34.9 degC | 0.0346, 0.0362, 0.0335 | 0.0076, 0.0080, 0.0072 | 99.98% |
@@ -343,7 +343,7 @@ six-face bench. It does not compare the final operating path.
 | Metric | BMI270 Raw/Downsampled | MPU6886 Raw/High-Bandwidth | Read |
 | --- | ---: | ---: | --- |
 | Gyro std | 0.901 dps mean across tests | X 0.1208, Y 0.1045, Z 0.0605 dps | MPU6886 raw sample noise is much lower. |
-| Gyro PSD / ARW | 0.180 dps/sqrtHz PSD floor, 0.180 dps/sqrtHz ARW | X 0.0212, Y 0.0176, Z 0.0120 dps/sqrtHz PSD floor | MPU6886 has about 8-15x lower raw gyro noise floor. |
+| Gyro PSD / rate noise density | 0.180 dps/sqrtHz PSD floor, 0.180 dps/sqrtHz rate-noise-density field | X 0.0212, Y 0.0176, Z 0.0120 dps/sqrtHz PSD floor | MPU6886 has about 8-15x lower raw gyro noise floor. |
 | Gyro PSD whiteness | 27/27 axes WHITE | 18/18 axes WHITE | Both sensors are white-noise limited at sample level. |
 | Gyro bias envelope | X/Y small, Z about +0.53 dps mean | X -5.09..-2.52, Y -3.22..-1.55, Z -0.79..-0.41 dps | MPU6886 loses badly on raw X/Y bias magnitude. |
 | Accel std | 3.98 mg mean | X 1.83, Y 1.66, Z 1.99 mg | MPU6886 raw accel noise is lower in this dataset. |
@@ -365,7 +365,7 @@ bandwidth, and accel 3 dB bandwidth 21.2 Hz with 31.0 Hz noise bandwidth.
 | Metric | BMI270 ODR50/LPF20, 3 tests | MPU6886 DLPF20/ODR50, 3 tests | Read |
 | --- | ---: | ---: | --- |
 | Gyro std X/Y/Z | 0.0345 / 0.0355 / 0.0335 dps | 0.0681 / 0.0473 / 0.0306 dps | BMI270 is lower on X/Y; MPU6886 is slightly lower on Z. |
-| Gyro ARW or PSD floor X/Y/Z | 0.00763 / 0.00790 / 0.00737 dps/sqrtHz ARW | 0.0120 / 0.00917 / 0.00603 dps/sqrtHz PSD floor | Same order after LPF; BMI270 lower on X/Y, MPU6886 lower on Z. |
+| Gyro rate noise density or PSD floor X/Y/Z | 0.00763 / 0.00790 / 0.00737 dps/sqrtHz | 0.0120 / 0.00917 / 0.00603 dps/sqrtHz PSD floor | Same order after LPF; BMI270 lower on X/Y, MPU6886 lower on Z. |
 | Gyro bias mean X/Y/Z | +0.174 / +0.026 / +0.555 dps | -3.753 / -2.653 / -0.657 dps | MPU6886 X/Y startup bias remains much larger. |
 | Accel std X/Y/Z | 0.555 / 0.653 / 0.684 mg | 0.613 / 0.587 / 0.629 mg | Comparable; no decisive practical difference from noise alone. |
 | Logger diagnostics | Timing status FAIL with 29/89/129 estimated drops; sensor FIFO overrun is zero. | CRC bad 0, resync 0, sequence gaps 0, timestamp drop estimate 0, FIFO overrun 0, SD drops 0 on all three runs. | MPU6886 bench logger is cleaner in this dataset. |
@@ -459,11 +459,11 @@ not as the main sensor-characterization plateau.
 
 The clean `tel_148` run validates the earlier BMI270 sensor conclusions by
 showing comparable behavior after the SD/logging issue was removed: gyro noise
-remains in the same ODR50/LPF20 class, ARW remains about 0.007-0.009
-dps/sqrtHz, PSD remains WHITE on all gyro axes, accel noise remains around
-0.55-0.67 mg, and ZARU keeps final `gx/gy/gz` centered near zero with about
-0.006 dps standard deviation. The run had strong ambient thermal excursion, so
-the validator TCO X failure is not used as a sensor verdict.
+remains in the same ODR50/LPF20 class, rate noise density remains about
+0.007-0.009 dps/sqrtHz, PSD remains WHITE on all gyro axes, accel noise remains
+around 0.55-0.67 mg, and ZARU keeps final `gx/gy/gz` centered near zero with
+about 0.006 dps standard deviation. The run had strong ambient thermal
+excursion, so the validator TCO X failure is not used as a sensor verdict.
 
 ### 5.6 Same-Face Repeatability
 
@@ -503,7 +503,8 @@ per-boot bias estimation mandatory for any serious MPU6886 operating path.
 The matching BMI270 ODR50/LPF20 +Z repeat is `tel_123` versus `tel_117`.
 The accelerometer Z mean changed by only -0.00008 g, confirming the same
 dominant orientation. The gyro plateau mean shifted by +0.061 / -0.026 /
--0.067 dps on X/Y/Z. Noise, ARW, and PSD whiteness are effectively unchanged.
+-0.067 dps on X/Y/Z. Noise, rate noise density, and PSD whiteness are
+effectively unchanged.
 This is small enough to be handled by the current ZARU/per-static correction
 strategy and is much better than the MPU6886 same-face X/Y repeatability.
 
@@ -694,7 +695,7 @@ or replay work:
 ## 7. Decision Status
 
 Current engineering decision: continue development on AtomS3R/BMI270 as the
-preferred production IMU path.
+preferred IMU path for this vehicle-telemetry and ESKF-input use case.
 
 Reason:
 
@@ -763,7 +764,27 @@ For the comparison study, additional MPU6886 logs are only needed if the next
 question is runtime bias recovery or dynamic replay. The static evidence is
 already strong enough for the current AtomS3R/BMI270 preference.
 
-## 11. Suggested Questions For M5Stack
+## 11. Application-Developer Feedback For M5Stack
+
+From an application-developer perspective, the AtomS3R/BMI270 combination is
+easier to integrate into a repeatable sensor-fusion path when configured with a
+conservative ODR/LPF setup and validated logging. Future documentation examples
+around recommended IMU configurations for telemetry use cases would be valuable
+for the community.
+
+The useful product insight is not "AtomS3 is bad." It is narrower:
+
+- AtomS3R/BMI270 appears well suited to compact telemetry and sensor-fusion
+  experiments when the operating path uses ODR50, LPF20/22-style filtering, and
+  logging-integrity checks.
+- AtomS3/MPU6886 can still be useful, especially where its Z-axis filtered
+  stability is enough, but the tested path needs stronger startup-bias handling
+  before I would use it as the main ESKF gyro input.
+- Clear documentation around recommended IMU setup, startup delay, static bias
+  initialization, and logging validation would help users get more consistent
+  results from compact M5Stack devices.
+
+## 12. Suggested Questions For M5Stack
 
 The useful vendor-facing questions are narrow and technical:
 
@@ -783,7 +804,7 @@ The main request is not a replacement or complaint claim. It is confirmation
 of whether the observed MPU6886 X/Y startup-bias behavior is expected, avoidable
 with a recommended configuration, or likely unit-specific.
 
-## 12. Suggested Delivery Package
+## 13. Suggested Delivery Package
 
 For an external M5Stack review, send the whitepaper plus compact artifacts
 rather than every raw BIN:

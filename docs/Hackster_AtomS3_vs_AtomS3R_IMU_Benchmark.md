@@ -1,11 +1,18 @@
-# Static IMU Benchmark: M5Stack AtomS3 vs AtomS3R for Vehicle Sensor Fusion
+# M5Stack Atom IMU Benchmark for Vehicle Telemetry
 
 ![AtomS3 vs AtomS3R IMU benchmark cover](assets/hackster_hero.png)
 
-Product images in the cover are from the official M5Stack documentation.
+Product images in the cover are from the official M5Stack documentation. The
+cover chart is an illustrative summary; the measured decision evidence is in
+the runtime-input table below.
 
-I compared two M5Stack boards as IMU sources for a vehicle telemetry and
-ESKF-style sensor-fusion pipeline:
+This project is not a generic winner/loser comparison. It is a practical
+engineering benchmark of two M5Stack Atom devices as IMU sources for vehicle
+telemetry and ESKF-style sensor fusion. The goal is to document a reproducible
+workflow, identify the most suitable operating path, and turn the tested
+hardware into useful technical evidence for the community.
+
+I compared:
 
 - **AtomS3** with the **MPU6886**
 - **AtomS3R** with the **BMI270 + BMM150**
@@ -14,12 +21,55 @@ The question was practical: which board gives the cleaner and more reliable
 gyro input after the filtering, logging, and static correction path that I
 would actually use in firmware?
 
+I am not choosing BMI270 because it wins every raw metric. I am choosing the
+AtomS3R/BMI270 path because, in my 50 Hz operating path with LPF, clean
+logging, and static/ZARU correction, it produces a quieter and better-centered
+final gyro input. The tested MPU6886 path shows a practical fixed-bias
+repeatability failure on X/Y.
+
 This is not a population-level MEMS qualification. It is a single-unit,
 firmware-path benchmark. The result is useful to me because it exposes the
 failure modes that matter for this estimator, but it should not be read as a
 universal claim about every MPU6886 or every BMI270.
 
-## Hardware
+This work was developed as part of my ongoing collaboration with M5Stack. The
+devices were used to build a reproducible technical benchmark, and the results
+are shared to help the community evaluate compact M5Stack hardware for real
+telemetry and sensor-fusion workflows.
+
+## Why this benchmark matters
+
+M5Stack devices are often used in fast prototyping, field telemetry, and compact
+embedded experiments. For sensor-fusion work, however, the important question is
+not only whether an IMU works, but whether its output remains stable enough
+after logging, filtering, startup behavior, and static correction. This
+benchmark documents that full path.
+
+## What I wanted to demonstrate
+
+- A reproducible test workflow, not just a quick sensor trial.
+- A clean separation between raw metrics, runtime pipeline behavior, and the
+  final application decision.
+- Reusable evidence for the community: figures, scripts, firmware, reports, and
+  a public repository.
+
+## Decision evidence
+
+The short version of the result is the corrected gyro signal that can actually
+be supplied to the estimator:
+
+| Sensor / case | Source | Mean residual X/Y/Z (dps) | Std X/Y/Z (dps) | Read |
+| --- | --- | ---: | ---: | --- |
+| BMI270 ODR50/LPF path + clean `tel_148` confirmation | Measured firmware output after pipeline/ZARU | about `0 / 0 / 0 dps` | `0.0068 / 0.0058 / 0.0061 dps` | Clean runtime input, consistent with stronger plateau logs |
+| MPU6886 fixed-bias replay | `MPU6886_014 -> MPU6886_017` | `+1.293 / +1.829 / +0.001 dps` | `0.056 / 0.041 / 0.032 dps` | Fixed X/Y bias is not adequate in my tested unit |
+| MPU6886 oracle/static replay | Same-run plateau bias on `MPU6886_017` | about `0 / 0 / 0 dps` | `0.056 / 0.041 / 0.032 dps` | Best static bound, not firmware ESKF output |
+
+Even under ideal static MPU6886 bias removal, the BMI270 measured runtime input
+is about **5-9x quieter** in this benchmark. The `tel_148` number is used here
+as a clean firmware-path confirmation, not as the single representative sensor
+plateau.
+
+## Devices under test
 
 | Board | IMU path | Other relevant hardware | Role in this test |
 | --- | --- | --- | --- |
@@ -31,7 +81,7 @@ not part of the IMU verdict below. Static magnetometer behavior depends heavily
 on local magnetic conditions, so I kept it separate from the gyro/accelerometer
 comparison.
 
-## Method
+## Test philosophy
 
 The benchmark uses long static logs with each board placed in fixed physical
 orientations. For each run, the analysis selects a thermally stable plateau
@@ -63,6 +113,9 @@ filtered numbers in one verdict.
 
 ![ODR and LPF improvement summary](../reports/figures/figure_07_odr_lpf_improvement.png)
 
+Within-sensor effect of moving from raw/high-bandwidth logs to the operating
+ODR+LPF/DLPF path. This figure is not the final cross-sensor verdict.
+
 | Sensor | Before path | Operating path | Gyro std change | Accel std change |
 | --- | --- | --- | ---: | ---: |
 | BMI270 | Raw/downsampled static logs | ODR50 + LPF20/22 | `0.9012 -> 0.0345 dps`, about **26.1x lower** | `3.98 -> 0.631 mg`, about **6.3x lower** |
@@ -73,7 +126,22 @@ the difference visually obvious:
 
 ![BMI270 raw/downsampled dashboard example](../reports/bmi270/tel_105_bosch_static_dashboard.png)
 
+BMI270 raw/downsampled validator dashboard. This is useful for MEMS
+characterization, but it is not the estimator input path.
+
 ![BMI270 ODR50/LPF dashboard example](../reports/bmi270/tel_117_bosch_static_dashboard.png)
+
+BMI270 ODR50/LPF validator dashboard for one strong stable-plateau run used as
+operating-path sensor evidence.
+
+Note: these BMI270 plots use the Bosch/BMI dashboard format. The MPU6886
+evidence is still based on long static plateaus, but it is reported through
+matching summary tables and replay artifacts rather than the same dashboard
+layout.
+
+For the static gyro decision, I use standard deviation, PSD whiteness, bias
+repeatability, and corrected runtime output. The SNR panel in the BMI dashboard
+is diagnostic context, not the main verdict metric.
 
 This is why the final decision is based on operating-path evidence. Raw sample
 noise is still useful for understanding each MEMS device, but the estimator will
@@ -82,6 +150,11 @@ not consume the raw/high-bandwidth signal directly.
 ## Firmware and analysis pipeline
 
 ![Benchmark pipeline](assets/hackster_pipeline.png)
+
+Conceptual benchmark pipeline. The real evidence is intentionally asymmetric:
+BMI270 includes a measured firmware path plus clean-log confirmation, while
+MPU6886 uses a dedicated static bench and offline replay rather than a
+demonstrated firmware ESKF/ZARU output.
 
 The two boards were not tested with a single generic sketch. Each path used the
 firmware or replay route that best matched the question being asked.
@@ -125,18 +198,9 @@ remains clean.
 | Estimated dropped samples | 0 |
 | FIFO overrun | 0 |
 
-The runtime-input comparison is the core of the decision:
-
-| Sensor / case | Source | Mean residual X/Y/Z (dps) | Std X/Y/Z (dps) | Read |
-| --- | --- | ---: | ---: | --- |
-| BMI270 ODR50/LPF path + clean `tel_148` confirmation | Measured firmware output after pipeline/ZARU | about `0 / 0 / 0 dps` | `0.0068 / 0.0058 / 0.0061 dps` | Clean runtime input, consistent with stronger plateau logs |
-| MPU6886 fixed-bias replay | `MPU6886_014 -> MPU6886_017` | `+1.293 / +1.829 / +0.001 dps` | `0.056 / 0.041 / 0.032 dps` | Fixed X/Y bias is not adequate in my tested unit |
-| MPU6886 oracle/static replay | Same-run plateau bias on `MPU6886_017` | about `0 / 0 / 0 dps` | `0.056 / 0.041 / 0.032 dps` | Best static bound, not firmware ESKF output |
-
-Even under ideal static MPU6886 bias removal, the BMI270 measured runtime input
-is about **5-9x quieter** in this benchmark. The `tel_148` number is used here
-as a clean firmware-path confirmation, not as the single representative sensor
-plateau.
+I do not use the `tel_148` thermal-coefficient result as a sensor verdict
+because that run had an uncontrolled ambient thermal excursion. Here, `tel_148`
+is used as a clean logging and runtime-output confirmation.
 
 The MPU6886 fixed-bias replay is the result that changed my decision. Applying
 the `MPU6886_014` +Z bias to the later same-face `MPU6886_017` run leaves a
@@ -155,6 +219,10 @@ Allan-style behavior used in the whitepaper:
 ![Noise comparison figure](../reports/figures/figure_02_noise_comparison.png)
 
 ![Allan deviation figure](../reports/figures/figure_05_allan_deviation.png)
+
+These figures are context for noise and stability behavior, not the final
+winner/loser metric. The decision is based on the operating-path runtime input,
+logging integrity, and bias-correction behavior.
 
 ## Interpretation
 
@@ -186,7 +254,8 @@ prove the full firmware path is already solved.
 
 ## Practical Decision
 
-For my tested devices and current pipeline, I would choose **AtomS3R/BMI270**.
+For this specific vehicle-telemetry and ESKF-input use case,
+**AtomS3R/BMI270** provided the cleaner and more practical operating path.
 
 I am not treating this as a universal MPU6886 verdict, and I am not claiming
 that the BMI270 wins every possible sensor benchmark. The MPU6886 remains
@@ -200,6 +269,8 @@ validating a robust per-boot/runtime bias estimator.
 Important limits of this benchmark:
 
 - It is a single-unit comparison, not a population study.
+- The MPU6886 DLPF20 fixed-bias failure is based on the current same-face repeat
+  evidence; additional 3-5 cold boots per face would make that claim stronger.
 - It is mostly static; a complete vehicle decision still benefits from dynamic
   replay or road testing.
 - The MPU6886 corrected result is an offline static sensor-only replay, not a
@@ -209,6 +280,16 @@ Important limits of this benchmark:
 - Raw GPS/vehicle logs are not published.
 - Thermal behavior was observed through plateau selection, but this is not a
   controlled thermal-chamber characterization.
+- A real setup photo would make the public article easier to trust visually;
+  the current evidence is report- and dashboard-based.
+
+## Feedback to M5Stack
+
+From an application-developer perspective, the AtomS3R/BMI270 combination is
+easier to integrate into a repeatable sensor-fusion path when configured with a
+conservative ODR/LPF setup and validated logging. Future documentation examples
+around recommended IMU configurations for telemetry use cases would be valuable
+for the community.
 
 ## Reproducibility / GitHub Repo
 
@@ -236,11 +317,18 @@ privacy. If the private raw files are placed in
 `data/raw_private_NOT_COMMITTED/`, the comparison artifacts can be regenerated
 with the script above. No raw GPS/vehicle logs are published.
 
+## Disclosure / Thanks
+
+This work was developed as part of my ongoing collaboration with M5Stack. It is
+not a paid performance claim or a population-level qualification. The goal is to
+turn real hardware into useful, reproducible technical feedback for compact
+telemetry and sensor-fusion projects.
+
 ## Conclusion
 
 For this single-unit static benchmark and my current ESKF-style vehicle
-telemetry path, AtomS3R/BMI270 is the more practical IMU choice. This is not a
-blanket sensor ranking; the tested AtomS3/MPU6886 path would need stronger
-runtime X/Y bias recovery before I would trust it as the estimator input. The
-BMI270 path already produced a clean logged runtime gyro input after LPF and
-ZARU/static correction.
+telemetry path, AtomS3R/BMI270 is the more practical IMU choice. AtomS3/MPU6886
+remains useful, but in my tests the fixed-bias path exposed startup-repeatability
+limitations that make it less attractive for this pipeline without additional
+calibration logic. The BMI270 path already produced a clean logged runtime gyro
+input after LPF and ZARU/static correction.

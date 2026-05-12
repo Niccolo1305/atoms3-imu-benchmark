@@ -1,8 +1,8 @@
-# AtomS3 vs AtomS3R IMU Benchmark
+# M5Stack Atom IMU Benchmark for Vehicle Telemetry
 
-Public technical evidence package for comparing M5Stack AtomS3 / MPU6886 and
-AtomS3R / BMI270 + BMM150 as IMU sources for a low-rate vehicle sensor-fusion
-pipeline.
+Public technical evidence package for evaluating M5Stack AtomS3 / MPU6886 and
+AtomS3R / BMI270 + BMM150 as IMU sources for a low-rate vehicle telemetry and
+sensor-fusion pipeline.
 
 This repository is intentionally scoped to reproducible summaries, compact
 artifacts, analysis scripts, and the dedicated MPU6886 static bench firmware.
@@ -11,7 +11,8 @@ logs may contain GPS-derived fields.
 
 ## Main Results
 
-- AtomS3R/BMI270 is the preferred IMU path for the tested firmware pipeline.
+- AtomS3R/BMI270 is the preferred IMU path for this tested vehicle-telemetry
+  and ESKF-input pipeline.
 - The main BMI270 sensor characterization comes from stronger ODR50/LPF static
   plateau logs such as `tel_117`.
 - The clean BMI270 confirmation run `tel_148` is used as a logging-path
@@ -25,7 +26,8 @@ logs may contain GPS-derived fields.
   sensor-only static bound, not a demonstrated runtime ESKF/ZARU output.
 
 The conclusion is deliberately scoped: these results characterize the tested
-units and firmware paths, not every possible MPU6886 or BMI270 unit.
+units, firmware paths, and operating assumptions, not every possible MPU6886 or
+BMI270 unit.
 
 ## Repository Map
 
@@ -57,7 +59,7 @@ data/
 
 1. `docs/AtomS3_vs_AtomS3R_Public_IMU_Benchmark.md`
 2. `docs/AtomS3_vs_AtomS3R_Sensor_Bench_Whitepaper.md`
-3. `reports/bmi270/orientamenti_statici_odr50_summary.md`
+3. `reports/bmi270/bmi270_odr50_lpf20_static_summary.md`
 4. `reports/bmi270/tel_148_bmi_clean_validation_summary.md`
 5. `reports/comparison/eskf_input_quality_comparison.md`
 6. `reports/comparison/mpu6886_zaru_replay_summary.md`

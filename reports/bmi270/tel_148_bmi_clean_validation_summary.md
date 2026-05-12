@@ -18,7 +18,7 @@
 | Metric | Previous ODR50 range/mean | tel_148 clean run | Read |
 |---|---:|---:|---|
 | Gyro std X/Y/Z | mean 0.03452 / 0.03554 / 0.03346 dps | 0.03368 / 0.04371 / 0.03424 dps | Same order; Y is higher in tel_148 but still small. |
-| Gyro ARW X/Y/Z | mean 0.00763 / 0.00790 / 0.00737 | 0.00740 / 0.00881 / 0.00781 | Same 0.007-0.009 dps/sqrtHz class. |
+| Gyro rate noise density X/Y/Z | mean 0.00763 / 0.00790 / 0.00737 | 0.00740 / 0.00881 / 0.00781 | Same 0.007-0.009 dps/sqrtHz class. |
 | PSD whiteness | WHITE on 9/9 previous ODR50 gyro axes | WHITE / WHITE / WHITE | White-noise model still valid. |
 | Gyro bias X/Y/Z | previous +0.147..+0.213 / +0.002..+0.058 / +0.542..+0.566 dps | +0.12617 / +0.00435 / +0.64258 dps | X/Y remain small; Z remains positive and must be corrected. |
 | Accel std X/Y/Z | mean 0.555 / 0.653 / 0.684 mg | 0.554 / 0.552 / 0.669 mg | Same clean low-noise accel class. |
@@ -40,6 +40,6 @@
 ## Conclusion
 
 - `tel_148` validates the earlier BMI270 sensor conclusions without the previous logging-gap caveat.
-- ODR50/LPF20 gyro noise, ARW, PSD whiteness, accel noise, and ZARU behavior match the previous characterization.
+- ODR50/LPF20 gyro noise, rate noise density, PSD whiteness, accel noise, and ZARU behavior match the previous characterization.
 - BMI270 X/Y gyro bias remains small and repeatable enough for the current correction strategy; Z offset remains positive and must continue to be corrected by boot/static bias and ZARU.
 - The TCO failure in this run is not used as a sensor verdict because the environment had significant temperature movement and the validator selected only a short 11.7 min plateau.
