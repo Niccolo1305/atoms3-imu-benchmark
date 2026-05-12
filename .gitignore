@@ -30,3 +30,7 @@ raw_private_NOT_COMMITTED/
 *.log
 *.bak
 *.zip
+
+# Hackster editor paste helpers; keep final article Markdown in docs/.
+docs/Hackster_Story_*.html
+docs/Hackster_Story_Safe.txt

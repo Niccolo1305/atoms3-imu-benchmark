@@ -60,6 +60,28 @@ The comparison keeps two paths separate:
 This matters because a decimated high-bandwidth signal is not equivalent to a
 signal that was bandwidth-limited before sampling.
 
+The before/after filtering effect is large enough that it deserves its own
+read, separate from the final board choice:
+
+![ODR and LPF improvement summary](../reports/figures/figure_07_odr_lpf_improvement.png)
+
+| Sensor | Before Path | Operating Path | Gyro Std Change | Accel Std Change |
+| --- | --- | --- | ---: | ---: |
+| BMI270 | Raw/downsampled static logs | ODR50 + LPF20/22 | `0.9012 -> 0.0345 dps`, about **26.1x lower** | `3.98 -> 0.631 mg`, about **6.3x lower** |
+| MPU6886 | Raw/high-bandwidth FIFO logs | DLPF20 + ODR50 | `0.0952 -> 0.0487 dps`, about **2.0x lower** | `1.83 -> 0.610 mg`, about **3.0x lower** |
+
+For BMI270, the visual contrast is especially clear between a raw/downsampled
+dashboard and the ODR50/LPF operating dashboard:
+
+![BMI270 raw/downsampled dashboard example](../reports/bmi270/tel_105_bosch_static_dashboard.png)
+
+![BMI270 ODR50/LPF dashboard example](../reports/bmi270/tel_117_bosch_static_dashboard.png)
+
+The interpretation is not "filtered numbers always win any sensor ranking."
+The interpretation is narrower: the estimator input must be judged on the
+bandwidth-limited operating path, while raw/high-bandwidth logs are a separate
+MEMS characterization track.
+
 ## 4. Logging And Validation
 
 The MPU6886 was tested with a dedicated static bench firmware that writes fixed
@@ -71,9 +93,14 @@ binary records to SD. It includes:
 - SD queue/drop diagnostics;
 - timestamp checks.
 
-The BMI270 was tested through the current AtomS3R vehicle-format logging path.
-The final confirmation run, `tel_148`, used the newer SD write architecture and
-passed the timing/logging checks:
+The BMI270 result uses the longer ODR50/LPF static logs for sensor
+characterization, because they contain more meaningful thermal plateaus. For
+example, `tel_117` has a roughly 50 minute plateau at about 34.9 degC and is
+one of the strongest visual examples of the filtered operating path.
+
+The later `tel_148` run is used differently: it is a logging-path confirmation,
+not the primary sensor-characterization sample. It used the newer SD write
+architecture and passed the timing/logging checks:
 
 | Metric | BMI270 `tel_148` |
 | --- | ---: |
@@ -83,7 +110,9 @@ passed the timing/logging checks:
 | SD records dropped | 0 |
 
 This matters because earlier BMI270 logs had timing gaps caused by the logging
-path, not by BMI270 FIFO overrun. The clean `tel_148` run removes that caveat.
+path, not by BMI270 FIFO overrun. The clean `tel_148` run removes that caveat
+and shows that the stronger ODR50/LPF plateau results remain comparable after
+the logging path was fixed.
 
 ## 5. What Was Measured
 
@@ -145,12 +174,14 @@ correction strategy.
 For my pipeline, the most useful comparison is the signal that would actually
 enter the estimator after correction.
 
-For BMI270, this is measured directly in firmware from `tel_148` after the
-current pipeline and ZARU/static correction path:
+For BMI270, the clean firmware-path confirmation is measured from `tel_148`
+after the current pipeline and ZARU/static correction path. This is used as a
+clean logging and consistency check for the stronger ODR50/LPF plateau logs, not
+as the only sensor sample:
 
 | Sensor | Source | Final Gyro Mean X/Y/Z | Final Gyro Std X/Y/Z |
 | --- | --- | ---: | ---: |
-| BMI270 | Real firmware output, `tel_148` | about `0 / 0 / 0 dps` | `0.0068 / 0.0058 / 0.0061 dps` |
+| BMI270 | Real firmware output, clean `tel_148` confirmation | about `0 / 0 / 0 dps` | `0.0068 / 0.0058 / 0.0061 dps` |
 
 For MPU6886, I do not yet have a real firmware ESKF/ZARU output. Instead, I ran
 an offline static replay:
@@ -186,7 +217,8 @@ vehicle fusion pipeline unless a robust runtime bias estimator is available.
 The BMI270 also has bias and needs correction, especially on raw Z, but in the
 tested AtomS3R pipeline it behaved better operationally:
 
-- clean logging in the final run;
+- long ODR50/LPF static plateaus show stable low-noise sensor behavior;
+- the clean `tel_148` run removes the earlier SD/logging caveat;
 - final corrected gyro centered near zero;
 - low final gyro standard deviation after ZARU/static correction;
 - better same-face repeatability than the tested MPU6886.

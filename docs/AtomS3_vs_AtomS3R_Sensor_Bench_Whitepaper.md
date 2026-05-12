@@ -10,15 +10,16 @@ BMI270 + BMM150. The goal is not a population-level MEMS qualification; it is
 an engineering evidence package for selecting the safer IMU path for the
 current vehicle ESKF pipeline.
 
-The current evidence favors AtomS3R/BMI270 for this pipeline. BMI270 produces
-a clean measured firmware gyro input after the current LPF/ZARU path
-(`tel_148`: about 0.0068 / 0.0058 / 0.0061 dps final gyro std, zero sequence
-gaps, zero estimated drops). MPU6886 remains competitive in some static
-noise and Z-axis metrics, especially after DLPF20, but the tested AtomS3 unit
-shows large and non-repeatable X/Y gyro startup bias. A fixed DLPF20 +Z bias
-from `MPU6886_014` applied to the same-face repeat `MPU6886_017` leaves
-+1.293 / +1.829 dps residual X/Y bias, which makes per-boot/runtime bias
-estimation mandatory for any serious MPU6886 path.
+The current evidence favors AtomS3R/BMI270 for this pipeline. The main BMI270
+sensor behavior is characterized by the longer ODR50/LPF static plateau logs,
+while `tel_148` is used as the clean firmware/logging confirmation: after the
+current LPF/ZARU path it gives about 0.0068 / 0.0058 / 0.0061 dps final gyro
+std with zero sequence gaps and zero estimated drops. MPU6886 remains
+competitive in some static noise and Z-axis metrics, especially after DLPF20,
+but the tested AtomS3 unit shows large and non-repeatable X/Y gyro startup
+bias. A fixed DLPF20 +Z bias from `MPU6886_014` applied to the same-face repeat
+`MPU6886_017` leaves +1.293 / +1.829 dps residual X/Y bias, which makes
+per-boot/runtime bias estimation mandatory for any serious MPU6886 path.
 
 The conclusion is therefore scoped and practical: for the tested devices and
 firmware paths, AtomS3R/BMI270 is the preferred production IMU direction. The
@@ -114,6 +115,7 @@ orientations collected so far.
 | R1 | `tools/script/bias-reports/eskf_input_quality_comparison.md` | Runtime/ESKF input quality comparison: BMI270 measured firmware output versus MPU6886 static sensor-only replay. |
 | R2 | `tools/script/bias-reports/eskf_input_quality_comparison.csv` | Machine-readable runtime/ESKF input quality table. |
 | R3 | `tools/script/bias-reports/mpu6886_zaru_replay_summary.md` | MPU6886 fixed-bias, boot-window, and oracle plateau bias replay summary. |
+| F7 | `reports/figures/figure_07_odr_lpf_improvement.png` | Visual summary of raw/high-bandwidth versus operating ODR+LPF/DLPF noise reduction. |
 | H1 | `analysis/reports/MPU6886_BiasDrift_Report.pdf` | Historical MPU6886 six-face sequential bias drift study. |
 
 The older M5Unified bench artifacts and figures are now treated as historical
@@ -170,6 +172,33 @@ the same way a hardware LPF does. A raw/high-bandwidth signal decimated to
 50 Hz will normally show more sample-to-sample noise than a signal bandwidth
 limited to about 20 Hz before sampling.
 
+The measured before/after effect is substantial on both sensors:
+
+![ODR and LPF improvement summary](../reports/figures/figure_07_odr_lpf_improvement.png)
+
+| Sensor | Raw / High-Bandwidth Track | Operating ODR+LPF Track | Gyro Std Change | Accel Std Change |
+| --- | --- | --- | ---: | ---: |
+| BMI270 | Raw/downsampled static logs | ODR50 + LPF20/22 | `0.9012 -> 0.0345 dps`, about **26.1x lower** | `3.98 -> 0.631 mg`, about **6.3x lower** |
+| MPU6886 | Raw/high-bandwidth FIFO logs | DLPF20 + ODR50 | `0.0952 -> 0.0487 dps`, about **2.0x lower** | `1.83 -> 0.610 mg`, about **3.0x lower** |
+
+The BMI270 visual examples below show why the operating path is not just a
+minor presentation choice. The raw/downsampled `tel_105` plot has a very wide
+gyro band, while the ODR50/LPF `tel_117` plot is in the expected low-noise
+operating class:
+
+![BMI270 raw/downsampled dashboard example](../reports/bmi270/tel_105_bosch_static_dashboard.png)
+
+![BMI270 ODR50/LPF dashboard example](../reports/bmi270/tel_117_bosch_static_dashboard.png)
+
+The MPU6886 improvement is visible numerically in the raw six-face and DLPF20
+operating summaries rather than in a dashboard image: gyro sample standard
+deviation drops from about `0.0952 dps` mean across axes to about `0.0487 dps`,
+and accelerometer noise drops from about `1.83 mg` to about `0.610 mg`.
+
+This before/after result does not replace the final board verdict. It explains
+why the final verdict must use the bandwidth-limited operating path, and why raw
+sample noise is treated as a separate characterization layer.
+
 ### 4.1 Measurement Method
 
 All static metrics in this document are computed from physical-unit samples
@@ -198,7 +227,10 @@ Important measurement constraints:
 - Raw/downsampled, FIFO high-bandwidth, and ODR/LPF operating-path numbers must
   not be averaged together. They represent different bandwidths.
 - Timing/logging diagnostics are part of validity. A log with CRC/resync/drop
-  issues is not accepted as a clean sensor characterization run.
+  issues is not accepted by itself as an end-to-end clean logging proof.
+  However, a thermally stable sensor plateau can still be useful for sensor
+  characterization when the sensor FIFO is healthy and a later clean logging
+  run confirms comparable behavior.
 
 ### 4.2 Historical M5Unified Bench
 
@@ -422,14 +454,16 @@ the current evidence set:
 | SD stalls/reopens | 3 / 3 | 0 / 0 |
 
 This makes `tel_148` the first clean long AtomS3R/BMI270 vehicle-format log in
-the current study.
+the current study. It is used as a logging-path and consistency confirmation,
+not as the main sensor-characterization plateau.
 
-The clean `tel_148` run also confirms the earlier BMI270 sensor conclusions:
-gyro noise remains in the same ODR50/LPF20 class, ARW remains about
-0.007-0.009 dps/sqrtHz, PSD remains WHITE on all gyro axes, accel noise remains
-around 0.55-0.67 mg, and ZARU keeps final `gx/gy/gz` centered near zero with
-about 0.006 dps standard deviation. The run had strong ambient thermal
-excursion, so the validator TCO X failure is not used as a sensor verdict.
+The clean `tel_148` run validates the earlier BMI270 sensor conclusions by
+showing comparable behavior after the SD/logging issue was removed: gyro noise
+remains in the same ODR50/LPF20 class, ARW remains about 0.007-0.009
+dps/sqrtHz, PSD remains WHITE on all gyro axes, accel noise remains around
+0.55-0.67 mg, and ZARU keeps final `gx/gy/gz` centered near zero with about
+0.006 dps standard deviation. The run had strong ambient thermal excursion, so
+the validator TCO X failure is not used as a sensor verdict.
 
 ### 5.6 Same-Face Repeatability
 
@@ -567,7 +601,9 @@ MPU6886 currently fails in a more dangerous way:
 
 For AtomS3R/BMI270, the current runtime decision is:
 
-- Use ODR50/LPF20-22 covariance from the clean `tel_148` operating path.
+- Use ODR50/LPF20-22 covariance from the stronger long-plateau BMI270 static
+  logs (`tel_116` / `tel_117` / `tel_118`), with `tel_148` retained as the
+  clean logging-path confirmation.
 - Keep ZARU enabled and trusted when static conditions are detected.
 - Keep sequence-gap and estimated-drop validation as mandatory log acceptance
   gates.

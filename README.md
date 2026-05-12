@@ -12,8 +12,10 @@ logs may contain GPS-derived fields.
 ## Main Results
 
 - AtomS3R/BMI270 is the preferred IMU path for the tested firmware pipeline.
-- The clean BMI270 confirmation run `tel_148` has zero sequence gaps, zero
-  estimated drops, and zero FIFO overrun.
+- The main BMI270 sensor characterization comes from stronger ODR50/LPF static
+  plateau logs such as `tel_117`.
+- The clean BMI270 confirmation run `tel_148` is used as a logging-path
+  validation: zero sequence gaps, zero estimated drops, and zero FIFO overrun.
 - BMI270 final firmware gyro output after pipeline/ZARU is about
   `0.0068 / 0.0058 / 0.0061 dps` standard deviation on X/Y/Z.
 - MPU6886 DLPF20 same-face replay shows fixed-bias failure on X/Y:
@@ -55,10 +57,11 @@ data/
 
 1. `docs/AtomS3_vs_AtomS3R_Public_IMU_Benchmark.md`
 2. `docs/AtomS3_vs_AtomS3R_Sensor_Bench_Whitepaper.md`
-3. `reports/comparison/eskf_input_quality_comparison.md`
-4. `reports/comparison/mpu6886_zaru_replay_summary.md`
-5. `reports/mpu6886/MPU6886_014_vs_017_dlpf20_repeat.md`
-6. `reports/bmi270/tel_148_bmi_clean_validation_summary.md`
+3. `reports/bmi270/orientamenti_statici_odr50_summary.md`
+4. `reports/bmi270/tel_148_bmi_clean_validation_summary.md`
+5. `reports/comparison/eskf_input_quality_comparison.md`
+6. `reports/comparison/mpu6886_zaru_replay_summary.md`
+7. `reports/mpu6886/MPU6886_014_vs_017_dlpf20_repeat.md`
 
 ## Raw Data Policy
 

@@ -1,6 +1,8 @@
 # Static IMU Benchmark: M5Stack AtomS3 vs AtomS3R for Vehicle Sensor Fusion
 
-![Static IMU benchmark concept](assets/hackster_hero.png)
+![AtomS3 vs AtomS3R IMU benchmark cover](assets/hackster_hero.png)
+
+Product images in the cover are from the official M5Stack documentation.
 
 I compared two M5Stack boards as IMU sources for a vehicle telemetry and
 ESKF-style sensor-fusion pipeline:
@@ -52,6 +54,31 @@ The 20 Hz LPF detail matters. A raw high-bandwidth signal decimated to 50 Hz is
 not the same thing as a signal bandwidth-limited before sampling. For an ESKF
 input-quality decision, I care most about the filtered operating path.
 
+## Raw vs ODR + LPF
+
+The largest noise change in the whole study is not only the choice of board. It
+is the move from raw/high-bandwidth data to the operating ODR + LPF path. That
+effect appears on both sensors, so I kept it explicit instead of mixing raw and
+filtered numbers in one verdict.
+
+![ODR and LPF improvement summary](../reports/figures/figure_07_odr_lpf_improvement.png)
+
+| Sensor | Before path | Operating path | Gyro std change | Accel std change |
+| --- | --- | --- | ---: | ---: |
+| BMI270 | Raw/downsampled static logs | ODR50 + LPF20/22 | `0.9012 -> 0.0345 dps`, about **26.1x lower** | `3.98 -> 0.631 mg`, about **6.3x lower** |
+| MPU6886 | Raw/high-bandwidth FIFO logs | DLPF20 + ODR50 | `0.0952 -> 0.0487 dps`, about **2.0x lower** | `1.83 -> 0.610 mg`, about **3.0x lower** |
+
+The BMI270 raw/downsampled dashboard and the filtered ODR50/LPF dashboard make
+the difference visually obvious:
+
+![BMI270 raw/downsampled dashboard example](../reports/bmi270/tel_105_bosch_static_dashboard.png)
+
+![BMI270 ODR50/LPF dashboard example](../reports/bmi270/tel_117_bosch_static_dashboard.png)
+
+This is why the final decision is based on operating-path evidence. Raw sample
+noise is still useful for understanding each MEMS device, but the estimator will
+not consume the raw/high-bandwidth signal directly.
+
 ## Firmware and analysis pipeline
 
 ![Benchmark pipeline](assets/hackster_pipeline.png)
@@ -67,16 +94,30 @@ firmware or replay route that best matched the question being asked.
 | Offline runtime comparison script | Rebuilt the runtime input comparison from private raw CSV/BIN sources into compact public reports. |
 | ZARU/static correction concept | During stationarity, the pipeline estimates or suppresses residual gyro bias so the estimator sees a centered gyro input. |
 
-For the BMI270 path, the most important result is measured directly from the
-current firmware output. For the MPU6886 path, the corrected result is an
-offline static sensor-only replay. That distinction is important: the MPU6886
-replay is useful as a bound, but it is not a demonstrated firmware ESKF result.
+For the BMI270 path, the sensor behavior is characterized with the stronger
+ODR50/LPF static plateau logs, and the final runtime-input result is confirmed
+with the clean firmware output. For the MPU6886 path, the corrected result is
+an offline static sensor-only replay. That distinction is important: the
+MPU6886 replay is useful as a bound, but it is not a demonstrated firmware ESKF
+result.
 
 ## Key Results
 
-The clean BMI270 confirmation run was `tel_148`. It matters because earlier
-AtomS3R logs had timing gaps in the logging path. In `tel_148`, those issues are
-gone while the sensor FIFO remains clean.
+The BMI270 result is built from two evidence layers.
+
+First, the sensor behavior comes from the stronger ODR50/LPF20-22 static logs,
+where the thermal plateau is long enough to make the noise and stability plots
+meaningful. For example, `tel_117` has a roughly 50 minute plateau at about
+34.9 degC and shows the filtered BMI270 gyro in the expected low-noise class:
+about `0.0346 / 0.0362 / 0.0335 dps` standard deviation on X/Y/Z, with
+WHITE gyro PSD behavior.
+
+Second, `tel_148` is the clean logging confirmation run. It is not the primary
+sensor-characterization sample. Its job is to show that the later AtomS3R
+firmware path fixed the SD/logging caveat while producing comparable BMI270
+noise and corrected-output behavior. Earlier AtomS3R logs had timing gaps in
+the logging path; in `tel_148`, those issues are gone while the sensor FIFO
+remains clean.
 
 | Logging metric | BMI270 `tel_148` |
 | --- | ---: |
@@ -84,18 +125,18 @@ gone while the sensor FIFO remains clean.
 | Estimated dropped samples | 0 |
 | FIFO overrun | 0 |
 
-![BMI270 tel_148 static dashboard](../reports/bmi270/tel_148_bosch_static_dashboard.png)
-
 The runtime-input comparison is the core of the decision:
 
 | Sensor / case | Source | Mean residual X/Y/Z (dps) | Std X/Y/Z (dps) | Read |
 | --- | --- | ---: | ---: | --- |
-| BMI270 `tel_148` | Measured firmware output after pipeline/ZARU | about `0 / 0 / 0 dps` | `0.0068 / 0.0058 / 0.0061 dps` | Clean runtime input |
+| BMI270 ODR50/LPF path + clean `tel_148` confirmation | Measured firmware output after pipeline/ZARU | about `0 / 0 / 0 dps` | `0.0068 / 0.0058 / 0.0061 dps` | Clean runtime input, consistent with stronger plateau logs |
 | MPU6886 fixed-bias replay | `MPU6886_014 -> MPU6886_017` | `+1.293 / +1.829 / +0.001 dps` | `0.056 / 0.041 / 0.032 dps` | Fixed X/Y bias is not adequate in my tested unit |
 | MPU6886 oracle/static replay | Same-run plateau bias on `MPU6886_017` | about `0 / 0 / 0 dps` | `0.056 / 0.041 / 0.032 dps` | Best static bound, not firmware ESKF output |
 
 Even under ideal static MPU6886 bias removal, the BMI270 measured runtime input
-is about **5-9x quieter** in this benchmark.
+is about **5-9x quieter** in this benchmark. The `tel_148` number is used here
+as a clean firmware-path confirmation, not as the single representative sensor
+plateau.
 
 The MPU6886 fixed-bias replay is the result that changed my decision. Applying
 the `MPU6886_014` +Z bias to the later same-face `MPU6886_017` run leaves a
@@ -132,7 +173,8 @@ angular-rate input.
 
 The AtomS3R/BMI270 path is operationally stronger in this tested setup because:
 
-- the final firmware run has clean logging diagnostics;
+- the ODR50/LPF static logs provide stronger long-plateau sensor evidence;
+- `tel_148` confirms that the later firmware path has clean logging diagnostics;
 - the operating path is already 50 Hz with LPF around 20 Hz;
 - ZARU/static correction keeps the final gyro input centered near zero;
 - the final corrected gyro standard deviation is around `0.006 dps` per axis.
