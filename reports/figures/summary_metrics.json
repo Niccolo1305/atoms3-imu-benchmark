@@ -1,7 +1,7 @@
 {
   "AtomS3": {
     "device": "AtomS3",
-    "log_path": "C:\\Users\\1305n\\Desktop\\esp32-telemetry-clean\\firmware\test\\atoms3_bench\\atoms3_psram_boot.txtMi",
+    "log_path": "raw_private_NOT_COMMITTED/atoms3_psram_boot.txt",
     "phase1": {
       "ax_g": 0.019,
       "ay_g": -0.0224,
@@ -375,7 +375,7 @@
   },
   "AtomS3R": {
     "device": "AtomS3R",
-    "log_path": "C:\\Users\\1305n\\Desktop\\esp32-telemetry-clean\\firmware\test\\atoms3r_bench\\atoms3r_psram_boot.txtMi",
+    "log_path": "raw_private_NOT_COMMITTED/atoms3r_psram_boot.txt",
     "phase1": {
       "ax_g": -0.0077,
       "ay_g": -0.018,

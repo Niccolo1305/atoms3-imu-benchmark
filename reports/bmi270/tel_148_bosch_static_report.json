@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "input": "C:\\Users\\1305n\\Desktop\\esp32-telemetry-clean\\tools\\script\\bias-reports\\tel_148.csv",
+  "input": "raw_private_NOT_COMMITTED/tel_148.csv",
   "duration_s": 7243.156042,
   "sampling": {
     "fs_hz": 49.990001999670774,
@@ -630,6 +630,6 @@
       }
     }
   },
-  "dashboard_png": "C:\\Users\\1305n\\Desktop\\esp32-telemetry-clean\\tools\\script\\Reports\\tel_148_bosch_static_dashboard.png",
+  "dashboard_png": "reports/bmi270/tel_148_bosch_static_dashboard.png",
   "warnings": []
 }

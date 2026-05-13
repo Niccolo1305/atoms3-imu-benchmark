@@ -1,6 +1,6 @@
 {
   "name": "MPU6886_007",
-  "csv": "C:\\Users\\1305n\\Desktop\\esp32-telemetry-clean\\tools\\script\\bias-reports\\MPU6886_007.csv",
+  "csv": "raw_private_NOT_COMMITTED/MPU6886_007.csv",
   "rows": 357750,
   "duration_s": 7154.979999,
   "duration_h": 1.9874944441666667,
@@ -125,8 +125,8 @@
     "21": 20
   },
   "diagnostics": {
-    "input": "C:\\Users\\1305n\\Desktop\\esp32-telemetry-clean\\tools\\script\\bias-reports\\MPU6886_007.BIN",
-    "csv": "C:\\Users\\1305n\\Desktop\\esp32-telemetry-clean\\tools\\script\\bias-reports\\MPU6886_007.csv",
+    "input": "raw_private_NOT_COMMITTED/MPU6886_007.BIN",
+    "csv": "raw_private_NOT_COMMITTED/MPU6886_007.csv",
     "file_size": 91584256,
     "header_ok": true,
     "header_crc_ok": true,

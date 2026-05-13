@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "input": "C:\\Users\\1305n\\Desktop\\esp32-telemetry-clean\\tools\\script\\bias-reports\\tel_105.csv",
+  "input": "raw_private_NOT_COMMITTED/tel_105.csv",
   "duration_s": 7139.831081,
   "sampling": {
     "fs_hz": 49.990001999670774,

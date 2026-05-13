@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "input": "C:\\Users\\1305n\\Desktop\\esp32-telemetry-clean\\tools\\script\\bias-reports\\tel_123.csv",
+  "input": "raw_private_NOT_COMMITTED/tel_123.csv",
   "duration_s": 7156.628173,
   "sampling": {
     "fs_hz": 49.992501124611536,
@@ -630,7 +630,7 @@
       }
     }
   },
-  "dashboard_png": "C:\\Users\\1305n\\Desktop\\esp32-telemetry-clean\\tools\\script\\Reports\\tel_123_bosch_static_dashboard.png",
+  "dashboard_png": "reports/bmi270/tel_123_bosch_static_dashboard.png",
   "warnings": [
     "timing quality FAIL: 54 estimated dropped samples"
   ]

@@ -20,7 +20,14 @@ SKIP_DIRS = {
 
 FORBIDDEN_SUFFIXES = {".bin", ".BIN", ".ld"}
 RAW_CSV_NAME = re.compile(r"^(tel_\d+|MPU6886_\d+)\.csv$", re.IGNORECASE)
-LOCAL_PATH_RE = re.compile(r"C:\\Users\\", re.IGNORECASE)
+WINDOWS_USER_PREFIX = "C:" + "\\" + "Users" + "\\"
+JSON_ESCAPED_WINDOWS_USER_PREFIX = WINDOWS_USER_PREFIX.replace("\\", "\\\\")
+LOCAL_PATH_RE = re.compile(
+    f"({re.escape(WINDOWS_USER_PREFIX)}|{re.escape(JSON_ESCAPED_WINDOWS_USER_PREFIX)})",
+    re.IGNORECASE,
+)
+PRIVATE_SOURCE_FRAGMENT = "esp32" + "-telemetry-clean"
+PRIVATE_SOURCE_RE = re.compile(re.escape(PRIVATE_SOURCE_FRAGMENT), re.IGNORECASE)
 GPS_HEADER_RE = re.compile(
     r"(gps_|nav_fix|dhv_fix|latitude|longitude|gps_lat|gps_lon|nmea)",
     re.IGNORECASE,
@@ -71,6 +78,8 @@ def check_text_content(path: Path) -> list[str]:
     errors: list[str] = []
     if LOCAL_PATH_RE.search(text):
         errors.append(f"{path}: contains a local Windows user path")
+    if PRIVATE_SOURCE_RE.search(text):
+        errors.append(f"{path}: contains a private source repository path fragment")
     if GPS_HEADER_RE.search(text) and path.suffix.lower() == ".csv":
         errors.append(f"{path}: contains GPS/navigation-looking header text")
     return errors

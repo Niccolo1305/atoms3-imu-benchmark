@@ -93,45 +93,34 @@ refer to. The raw/high-bandwidth track is now summarized side by side, while
 the operating-LPF track is now summarized for the three matched principal
 orientations collected so far.
 
-## 2. Current Artifacts
+## 2. Current Public Artifacts
 
 | ID | Artifact | Role |
 | --- | --- | --- |
 | B1 | `reports/bmi270/bmi270_odr50_lpf20_static_summary.md` | Current BMI270 ODR50 / LPF20 static summary. |
-| B2 | `tools/script/bias-reports/static-orientations-odr50/orientamenti_statici_odr50_summary.csv` | Machine-readable BMI270 ODR50 summary. |
-| B3 | `tools/script/bias-reports/tel_116_bosch_static_report.json` | BMI270 ODR50, gravity on +X (`usb-c-up`). |
-| B4 | `tools/script/bias-reports/tel_117_bosch_static_report.json` | BMI270 ODR50, gravity on +Z (`su`). |
-| B5 | `tools/script/bias-reports/tel_118_bosch_static_report.json` | BMI270 ODR50, gravity on -Y (`destra`). |
-| B6 | `tools/script/bias-reports/tel_123_bosch_static_report.json` | BMI270 ODR50, gravity on +Z, repeat of `tel_117` after sync/logging changes. |
-| B7 | `tools/script/bias-reports/tel_123_vs_tel_117_bmi_repeat_sync.md` | BMI270 +Z same-face repeatability and sync/logging comparison. |
-| B8 | `tools/script/bias-reports/tel_148_bosch_static_report.json` | BMI270 ODR50, gravity on +Z, v1.8.2 SD write architecture confirmation run. |
-| B9 | `tools/script/bias-reports/tel_148_sync_final_check.md` | Final sync/logging confirmation: zero timestamp gaps, zero sequence gaps, zero estimated drops. |
-| B10 | `tools/script/bias-reports/tel_148_bmi_clean_validation_summary.md` | Clean-log validation summary confirming BMI270 noise, bias, PSD, accel, and ZARU conclusions without the earlier logging-gap caveat. |
-| M1 | `tools/script/bias-reports/MPU6886_001.BIN` | Long MPU6886 FIFO bench run, gravity +Z. |
-| M2 | `tools/script/bias-reports/MPU6886_002.BIN` | Long MPU6886 FIFO bench run, gravity -X. |
-| M3 | `tools/script/bias-reports/MPU6886_003.BIN` | Long MPU6886 FIFO bench run, gravity +X. |
-| M4 | `tools/script/bias-reports/MPU6886_static_long_summary.md` | Combined MPU6886 long-run plateau/noise/drift summary. |
-| M5 | `tools/script/bias-reports/MPU6886_static_long_summary.csv` | Machine-readable MPU6886 long-run summary. |
-| M6 | `tools/script/bias-reports/MPU6886_007.BIN` | Long MPU6886 FIFO bench run, gravity -Z. |
-| M7 | `tools/script/bias-reports/MPU6886_010.BIN` | Long MPU6886 FIFO bench run, gravity -Y. |
-| M8 | `tools/script/bias-reports/MPU6886_011.BIN` | Long MPU6886 FIFO bench run, gravity +Y. |
-| M9 | `tools/script/bias-reports/MPU6886_static_sixface_aggregate.json` | Aggregate six-face MPU6886 raw/high-bandwidth characterization. |
-| M10 | `tools/script/bias-reports/MPU6886_repeat_plusZ_comparison.md` | Same-face +Z repeatability check using `MPU6886_001`, `012`, and `013`. |
-| M11 | `tools/script/bias-reports/raw_bmi_vs_mpu6886_comparison.md` | Raw/high-bandwidth BMI270 vs MPU6886 comparison, including PSD whiteness. |
-| M12 | `tools/script/bias-reports/MPU6886_014.BIN` | MPU6886 operating-LPF run: ODR50, gyro DLPF_CFG=4, accel A_DLPF_CFG=4, gravity +Z. |
-| M13 | `tools/script/bias-reports/MPU6886_015.BIN` | MPU6886 operating-LPF run: ODR50, gyro DLPF_CFG=4, accel A_DLPF_CFG=4, gravity +X. |
-| M14 | `tools/script/bias-reports/MPU6886_016.BIN` | MPU6886 operating-LPF run: ODR50, gyro DLPF_CFG=4, accel A_DLPF_CFG=4, gravity -Y. |
-| M15 | `tools/script/bias-reports/MPU6886_dlpf20_operating_summary.md` | Three-orientation MPU6886 DLPF20/ODR50 plateau/noise/PSD summary. |
-| M16 | `tools/script/bias-reports/MPU6886_017.BIN` | MPU6886 operating-LPF same-face repeat run, gravity +Z. |
-| M17 | `tools/script/bias-reports/MPU6886_014_vs_017_dlpf20_repeat.md` | DLPF20 +Z same-face repeatability check showing X/Y startup bias shift. |
-| R1 | `tools/script/bias-reports/eskf_input_quality_comparison.md` | Runtime/ESKF input quality comparison: BMI270 measured firmware output versus MPU6886 static sensor-only replay. |
-| R2 | `tools/script/bias-reports/eskf_input_quality_comparison.csv` | Machine-readable runtime/ESKF input quality table. |
-| R3 | `tools/script/bias-reports/mpu6886_zaru_replay_summary.md` | MPU6886 fixed-bias, boot-window, and oracle plateau bias replay summary. |
+| B2 | `reports/bmi270/bmi270_odr50_static_orientations_summary.csv` | Machine-readable BMI270 ODR50 summary. |
+| B3 | `reports/bmi270/tel_116_bosch_static_report.json` | BMI270 ODR50, gravity on +X. |
+| B4 | `reports/bmi270/tel_117_bosch_static_report.json` | BMI270 ODR50, gravity on +Z. |
+| B5 | `reports/bmi270/tel_118_bosch_static_report.json` | BMI270 ODR50, gravity on -Y. |
+| B6 | `reports/bmi270/tel_123_bosch_static_report.json` | BMI270 ODR50, gravity on +Z, repeat of `tel_117` after sync/logging changes. |
+| B7 | `reports/bmi270/tel_123_vs_tel_117_bmi_repeat_sync.md` | BMI270 +Z same-face repeatability and sync/logging comparison. |
+| B8 | `reports/bmi270/tel_148_bosch_static_report.json` | BMI270 ODR50, gravity on +Z, v1.8.2 SD write architecture confirmation run. |
+| B9 | `reports/bmi270/tel_148_sync_final_check.md` | Final sync/logging confirmation: zero timestamp gaps, zero sequence gaps, zero estimated drops. |
+| B10 | `reports/bmi270/tel_148_bmi_clean_validation_summary.md` | Clean-log validation summary confirming BMI270 noise, bias, PSD, accel, and ZARU conclusions without the earlier logging-gap caveat. |
+| M1 | `reports/mpu6886/MPU6886_static_long_summary.md` and `.csv` | Combined MPU6886 long-run plateau/noise/drift summary. |
+| M2 | `reports/mpu6886/MPU6886_static_sixface_aggregate.json` | Aggregate six-face MPU6886 raw/high-bandwidth characterization. |
+| M3 | `reports/mpu6886/MPU6886_repeat_plusZ_comparison.md` | Same-face +Z repeatability check using the long-run MPU6886 captures. |
+| M4 | `reports/mpu6886/MPU6886_dlpf20_operating_summary.md` and `.csv` | Three-orientation MPU6886 DLPF20/ODR50 plateau/noise/PSD summary. |
+| M5 | `reports/mpu6886/MPU6886_014_vs_017_dlpf20_repeat.md` | DLPF20 +Z same-face repeatability check showing X/Y startup bias shift. |
+| R1 | `reports/comparison/eskf_input_quality_comparison.md` and `.csv` | Runtime/ESKF input quality comparison: BMI270 measured firmware output versus MPU6886 static sensor-only replay. |
+| R2 | `reports/comparison/mpu6886_zaru_replay_summary.md` | MPU6886 fixed-bias, boot-window, and oracle plateau bias replay summary. |
+| R3 | `reports/comparison/raw_bmi_vs_mpu6886_comparison.md` | Raw/high-bandwidth BMI270 vs MPU6886 comparison, including PSD whiteness. |
 | F7 | `reports/figures/figure_07_odr_lpf_improvement.png` | Visual summary of raw/high-bandwidth versus operating ODR+LPF/DLPF noise reduction. |
-| H1 | `analysis/reports/MPU6886_BiasDrift_Report.pdf` | Historical MPU6886 six-face sequential bias drift study. |
 
-The older M5Unified bench artifacts and figures are now treated as historical
-bring-up evidence, not as the primary quantitative comparison.
+Raw `.BIN`, raw `tel_*.csv`, and large vehicle-format captures are intentionally
+not part of the public repository. The older M5Unified bench artifacts and
+figures are treated as historical bring-up evidence, not as the primary
+quantitative comparison.
 
 ## 2.1 Scope And Delivery Caveats
 
@@ -840,13 +829,13 @@ rather than every raw BIN:
 
 | Artifact | Why Include It |
 | --- | --- |
-| `analysis/reports/AtomS3_vs_AtomS3R_Sensor_Bench_Whitepaper.md` or exported PDF | Main technical narrative and conclusions. |
-| `tools/script/bias-reports/eskf_input_quality_comparison.md` and `.csv` | Direct runtime/ESKF input comparison and machine-readable metrics. |
-| `tools/script/bias-reports/mpu6886_zaru_replay_summary.md` | Shows the fixed-bias limitation and oracle static bound for MPU6886. |
-| `tools/script/bias-reports/MPU6886_014_vs_017_dlpf20_repeat.md` | Short evidence for same-face DLPF20 X/Y startup-bias shift. |
-| `tools/script/bias-reports/tel_148_bmi_clean_validation_summary.md` | Clean BMI270 run confirming zero gaps/drops and final ZARU behavior. |
-| `tools/script/bias-reports/tel_148_sync_final_check.md` | Specific timing/logging validation for the AtomS3R confirmation run. |
-| `tools/script/build_atom_runtime_comparison.py` | Reproducibility script for the runtime comparison tables. |
+| `docs/AtomS3_vs_AtomS3R_Sensor_Bench_Whitepaper.md` or exported PDF | Main technical narrative and conclusions. |
+| `reports/comparison/eskf_input_quality_comparison.md` and `.csv` | Direct runtime/ESKF input comparison and machine-readable metrics. |
+| `reports/comparison/mpu6886_zaru_replay_summary.md` | Shows the fixed-bias limitation and oracle static bound for MPU6886. |
+| `reports/mpu6886/MPU6886_014_vs_017_dlpf20_repeat.md` | Short evidence for same-face DLPF20 X/Y startup-bias shift. |
+| `reports/bmi270/tel_148_bmi_clean_validation_summary.md` | Clean BMI270 run confirming zero gaps/drops and final ZARU behavior. |
+| `reports/bmi270/tel_148_sync_final_check.md` | Specific timing/logging validation for the AtomS3R confirmation run. |
+| `scripts/build_atom_runtime_comparison.py` | Reproducibility script for the runtime comparison tables. |
 
 Raw `.BIN` and large `.csv` files should be kept available on request, but not
 sent by default unless M5Stack wants to rerun the analysis independently.

@@ -16,5 +16,5 @@
 
 ## Generated Files
 
-- `reports/bmi270/orientamenti_statici_odr50_summary.csv`
+- `reports/bmi270/bmi270_odr50_static_orientations_summary.csv`
 - `reports/bmi270/bmi270_odr50_lpf20_static_summary.md`

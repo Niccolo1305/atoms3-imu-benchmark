@@ -1,6 +1,6 @@
 {
-  "input": "C:\\Users\\1305n\\Desktop\\esp32-telemetry-clean\\tools\\script\\bias-reports\\MPU6886_002.BIN",
-  "csv": "C:\\Users\\1305n\\Desktop\\esp32-telemetry-clean\\tools\\script\\bias-reports\\MPU6886_002.csv",
+  "input": "raw_private_NOT_COMMITTED/MPU6886_002.BIN",
+  "csv": "raw_private_NOT_COMMITTED/MPU6886_002.csv",
   "file_size": 91648256,
   "header_ok": true,
   "header_crc_ok": true,
