@@ -1,14 +1,15 @@
-# M5Stack Atom IMU Benchmark for Vehicle Telemetry
+# M5Stack AtomS3 vs AtomS3R: Choosing the Better IMU Path
 
 Draft for public sharing on Hackster.io or the M5Stack forum.
 
 ## 1. Context And Goal
 
-This is not a generic winner/loser comparison. It is a practical engineering
-benchmark of two M5Stack Atom devices as IMU sources for vehicle telemetry and
-ESKF-style sensor fusion. The goal is to document a reproducible workflow,
-identify the most suitable operating path, and turn the tested hardware into
-useful technical evidence for the community.
+This is not a generic winner/loser comparison. It is a practical IMU-path
+selection benchmark for two M5Stack Atom devices. Vehicle telemetry with an
+ESKF-style estimator is the reference application, not the only context where
+the evidence is useful. It asks whether a compact IMU module can provide clean,
+repeatable, bandwidth-limited gyro/accel input after logging, filtering,
+startup-bias checks, and static correction.
 
 I compared:
 
@@ -16,24 +17,35 @@ I compared:
 - M5Stack AtomS3R with BMI270 + BMM150
 
 The question was practical, not academic: which board gives the cleaner and
-more reliable gyro input for a low-rate ESKF-style pipeline after realistic
-filtering and static bias correction?
+more reliable gyro input after the filtering, logging, and static correction
+path that a real telemetry, motion-processing, or estimator pipeline would
+consume?
 
 This is not a population-level MEMS qualification. It characterizes the tested
 units, firmware paths, and logging setup. The goal is to make the test method
 and the results clear enough that others can repeat or challenge them.
 
-This work was developed as part of my ongoing collaboration with M5Stack. The
-devices were used to build a reproducible technical benchmark, and the results
-are shared to help the community evaluate compact M5Stack hardware for telemetry
+The tested hardware was used to build a reproducible public benchmark for
+compact telemetry, motion logging, field instrumentation, robotics prototyping,
 and sensor-fusion workflows.
+
+## 1.1 Practical Recommendation
+
+- Choose AtomS3R/BMI270 if the project needs cleaner corrected gyro input,
+  conservative ODR/LPF operation, validated logging, static correction, or a
+  stronger path toward sensor fusion and field instrumentation.
+- Use AtomS3/MPU6886 if you already have it, the project is simpler, or you are
+  prepared to implement per-boot/runtime gyro bias estimation.
+- Do not read this as a universal MEMS ranking. It is an application-path
+  recommendation based on the tested units, firmware paths, and measured static
+  evidence.
 
 ## 2. Devices Under Test
 
 | Board | IMU | Extra Sensors / Features | Role In This Test |
 | --- | --- | --- | --- |
 | AtomS3 | MPU6886 | No magnetometer on this board path | Legacy/reference IMU path |
-| AtomS3R | BMI270 + BMM150 | Magnetometer and PSRAM available | Candidate production IMU path |
+| AtomS3R | BMI270 + BMM150 | Magnetometer and PSRAM available | Candidate telemetry / sensor-fusion path |
 
 The AtomS3R is the stronger platform on paper because it adds the BMM150
 magnetometer and PSRAM. This benchmark focuses only on the IMU behavior.
@@ -75,19 +87,26 @@ signal that was bandwidth-limited before sampling.
 I am not choosing BMI270 because it wins every raw metric. I am choosing the
 AtomS3R/BMI270 path because, in my 50 Hz operating path with LPF, clean logging,
 and static/ZARU correction, it produces a quieter and better-centered final gyro
-input. The tested MPU6886 path shows a practical fixed-bias repeatability
-failure on X/Y.
+input. In the tested MPU6886 path, a fixed X/Y bias did not transfer reliably
+between same-face runs.
+
+The short version of the result is the corrected gyro signal that would
+actually reach an estimator or motion-processing pipeline, not only raw MEMS
+noise.
 
 | Sensor / case | Source | Final Mean X/Y/Z | Final Std X/Y/Z | Read |
 | --- | --- | ---: | ---: | --- |
 | BMI270 ODR50/LPF path + clean `tel_148` confirmation | Measured firmware output after pipeline/ZARU | about `0 / 0 / 0 dps` | `0.0068 / 0.0058 / 0.0061 dps` | Clean runtime input |
-| MPU6886 fixed-bias replay | `MPU6886_014 -> MPU6886_017` | `+1.293 / +1.829 / +0.001 dps` | `0.056 / 0.041 / 0.032 dps` | Fixed X/Y bias is not adequate |
+| MPU6886 fixed-bias replay | `MPU6886_014 -> MPU6886_017` | `+1.293 / +1.829 / +0.001 dps` | `0.056 / 0.041 / 0.032 dps` | Fixed X/Y bias did not transfer reliably |
 | MPU6886 oracle/static replay | Same-run plateau bias on `MPU6886_017` | about `0 / 0 / 0 dps` | `0.056 / 0.041 / 0.032 dps` | Static bound only |
 
 ## 5. Raw vs Operating ODR + LPF
 
 The before/after filtering effect is large enough that it deserves its own
 read, separate from the final board choice:
+
+This matters beyond ESKF: many practical IMU projects consume filtered/logged
+data rather than raw high-bandwidth samples.
 
 ![ODR and LPF improvement summary](../reports/figures/figure_07_odr_lpf_improvement.png)
 
@@ -203,8 +222,8 @@ the same. But the gyro plateau mean changed by:
 | Z | `+0.001 dps` |
 
 This is the most important result of the benchmark. The tested MPU6886 unit
-cannot rely on a fixed stored X/Y gyro bias for this pipeline. It would need a
-per-boot or runtime bias estimator.
+cannot rely on a fixed stored X/Y gyro bias for stricter telemetry or
+sensor-fusion work. It would need a per-boot or runtime bias estimator.
 
 The BMI270 +Z repeat was much smaller:
 
@@ -237,7 +256,7 @@ an offline static replay:
 - fixed bias from `MPU6886_014` applied to `MPU6886_017`;
 - same-run plateau/oracle bias applied to `MPU6886_017`.
 
-The fixed-bias replay failed:
+The fixed-bias replay left a large residual:
 
 | Replay | Residual Mean X/Y/Z |
 | --- | ---: |
@@ -260,7 +279,8 @@ The main lesson is that white noise is not the whole story.
 The MPU6886 can look good in some noise metrics, especially on the Z axis after
 DLPF20. However, on the tested AtomS3 unit, X/Y startup bias was large and not
 repeatable across same-face power-cycle runs. That is a hard problem for a
-vehicle fusion pipeline unless a robust runtime bias estimator is available.
+stricter telemetry or sensor-fusion pipeline unless a robust runtime bias
+estimator is available.
 
 The BMI270 also has bias and needs correction, especially on raw Z, but in the
 tested AtomS3R pipeline it behaved better operationally:
@@ -271,10 +291,24 @@ tested AtomS3R pipeline it behaved better operationally:
 - low final gyro standard deviation after ZARU/static correction;
 - better same-face repeatability than the tested MPU6886.
 
-## 9. Practical Decision
+## 9. Practical Selection Guide
 
-For this specific vehicle-telemetry and ESKF-input use case, AtomS3R/BMI270
-provided the cleaner and more practical operating path.
+### Best candidate for stricter IMU workflows
+
+For the reference vehicle-telemetry / ESKF path, and for adjacent low-rate IMU
+workflows with similar logging/filtering/correction requirements,
+AtomS3R/BMI270 provided the cleaner and more practical operating path.
+
+More generally, the result suggests that the AtomS3R/BMI270 path is the
+stronger candidate for compact low-rate telemetry, motion logging, field
+instrumentation, and sensor-fusion experiments that depend on stable filtered
+gyro input.
+
+### Still useful for simpler or custom-calibrated workflows
+
+I would not reject the MPU6886 universally. AtomS3/MPU6886 remains useful for
+simpler IMU projects, demos, and workflows where a robust per-boot/runtime gyro
+bias estimator is available.
 
 Current preferred path:
 
@@ -285,8 +319,10 @@ BMI270 FIFO ODR50 / LPF20 physical samples
 -> ESKF covariance tuned from ODR50 static logs
 ```
 
-I would not reject the MPU6886 universally. Based on this test, I would only
-use it for the same pipeline if I first validated:
+### What would move MPU6886 forward
+
+Based on this test, I would only use MPU6886 for stricter telemetry or
+sensor-fusion work if I first validated:
 
 - per-boot or runtime X/Y bias estimation;
 - dynamic replay with corrected residual bias near zero;
@@ -298,12 +334,18 @@ This is a single-unit engineering benchmark.
 
 Important limitations:
 
+- It is directly validated for the tested units and the reference
+  vehicle-telemetry / ESKF path.
+- It is informative, not fully validated, for adjacent compact telemetry,
+  motion-logging, robotics, field-instrumentation, and low-rate sensor-fusion
+  workflows.
 - It does not prove all MPU6886 units behave the same way.
 - It does not prove all BMI270 units behave the same way.
-- The MPU6886 DLPF20 fixed-bias failure is based on the current same-face repeat
-  evidence; additional 3-5 cold boots per face would make that claim stronger.
+- The MPU6886 DLPF20 fixed-bias limitation is based on the current same-face
+  repeat evidence; additional 3-5 cold boots per face would make that claim
+  stronger.
 - It is mostly static; dynamic replay would be needed for a complete vehicle
-  validation.
+  validation, and broader motion conclusions still need dynamic validation.
 - The MPU6886 corrected result is an offline static replay, not a real firmware
   ESKF output.
 - Thermal LUT or polynomial correction was not added because the available
@@ -313,10 +355,15 @@ Important limitations:
 ## 11. Feedback to M5Stack
 
 From an application-developer perspective, the AtomS3R/BMI270 combination is
-easier to integrate into a repeatable sensor-fusion path when configured with a
-conservative ODR/LPF setup and validated logging. Future documentation examples
-around recommended IMU configurations for telemetry use cases would be valuable
+a strong candidate for compact field-instrumentation and sensor-fusion
+examples when configured with conservative ODR/LPF settings and validated
+logging. Future documentation examples around recommended IMU configurations
+for telemetry, motion logging, and sensor-fusion use cases would be valuable
 for the community.
+
+This kind of workflow can help position M5Stack devices not only as
+prototyping modules, but also as compact platforms for reproducible measurement
+experiments.
 
 ## 12. Reproducible Artifacts
 
@@ -347,8 +394,13 @@ telemetry and sensor-fusion projects.
 This benchmark was useful: it changed the question from "which IMU is less
 noisy?" to "which IMU gives the safer corrected estimator input?"
 
-For this specific vehicle-telemetry and ESKF-input use case, AtomS3R/BMI270
-provided the cleaner and more practical operating path. AtomS3/MPU6886 remains
-useful, especially on Z-axis stability and filtered noise, but in my tests the
-fixed-bias path exposed startup-repeatability limitations that make it less
-attractive for this pipeline without additional calibration logic.
+For my vehicle-telemetry ESKF path, AtomS3R/BMI270 is the practical choice.
+More generally, the result suggests that the AtomS3R/BMI270 path is the
+stronger candidate for compact low-rate telemetry, motion logging, field
+instrumentation, and sensor-fusion experiments that depend on stable filtered
+gyro input. AtomS3/MPU6886 remains useful, especially for simpler IMU work or
+workflows that implement robust per-boot/runtime gyro bias estimation.
+
+For users, the practical takeaway is simple: choose AtomS3R/BMI270 when the IMU
+path itself is part of the measurement quality problem, not just a source of raw
+acceleration and gyro samples.
