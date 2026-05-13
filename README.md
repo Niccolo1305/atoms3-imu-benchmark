@@ -70,7 +70,7 @@ BMI270 unit.
 ```text
 docs/
   AtomS3_vs_AtomS3R_Sensor_Bench_Whitepaper.md
-  AtomS3_vs_AtomS3R_Public_IMU_Benchmark.md
+  Hackster_AtomS3_vs_AtomS3R_IMU_Benchmark.md
 
 reports/
   bmi270/       Compact BMI270 validator reports, dashboards, and summaries
@@ -93,7 +93,7 @@ data/
 
 ## Recommended Reading Order
 
-1. `docs/AtomS3_vs_AtomS3R_Public_IMU_Benchmark.md`
+1. `docs/Hackster_AtomS3_vs_AtomS3R_IMU_Benchmark.md`
 2. `docs/AtomS3_vs_AtomS3R_Sensor_Bench_Whitepaper.md`
 3. `reports/bmi270/bmi270_odr50_lpf20_static_summary.md`
 4. `reports/bmi270/tel_148_bmi_clean_validation_summary.md`
