@@ -7,8 +7,8 @@ sensor-fusion workflows.
 
 This is not a generic winner/loser comparison. It is a practical IMU-path
 selection benchmark built around the full acquisition path: ODR/LPF settings,
-logging integrity, startup-bias repeatability, and static/ZARU-style
-correction.
+logging integrity, startup-bias repeatability, and stationary gyro-bias
+correction such as ZARU (Zero Angular Rate Update).
 
 Vehicle telemetry with an ESKF-style estimator is the reference application,
 not the only context where the evidence is useful. The broader value is the

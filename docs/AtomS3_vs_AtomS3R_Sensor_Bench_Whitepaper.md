@@ -18,8 +18,9 @@ data and static/runtime bias correction.
 The current evidence favors AtomS3R/BMI270 for the reference pipeline. The main
 BMI270 sensor behavior is characterized by the longer ODR50/LPF static plateau
 logs, while `tel_148` is used as the clean firmware/logging confirmation: after
-the current LPF/ZARU path it gives about 0.0068 / 0.0058 / 0.0061 dps final
-gyro std with zero sequence gaps and zero estimated drops. MPU6886 remains
+the current LPF/ZARU path, where ZARU means Zero Angular Rate Update, it gives
+about 0.0068 / 0.0058 / 0.0061 dps final gyro std with zero sequence gaps and
+zero estimated drops. MPU6886 remains
 competitive in some static noise and Z-axis metrics, especially after DLPF20,
 but the tested AtomS3 unit shows large and non-repeatable X/Y gyro startup
 bias. A fixed DLPF20 +Z bias from `MPU6886_014` applied to the same-face repeat

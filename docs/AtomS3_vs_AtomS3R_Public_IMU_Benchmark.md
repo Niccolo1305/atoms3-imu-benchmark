@@ -65,7 +65,8 @@ Main checks:
 - accelerometer noise;
 - bias repeatability after power-cycle;
 - logging integrity;
-- corrected gyro output after static/ZARU-style bias handling.
+- corrected gyro output after static/ZARU-style bias handling, where ZARU means
+  Zero Angular Rate Update.
 
 All values are computed from physical units:
 

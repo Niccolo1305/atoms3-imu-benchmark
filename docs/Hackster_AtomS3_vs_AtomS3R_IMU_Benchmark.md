@@ -24,9 +24,10 @@ real telemetry, motion-processing, or estimator pipeline would consume?
 
 I am not choosing BMI270 because it wins every raw metric. I am choosing the
 AtomS3R/BMI270 path because, in my 50 Hz operating path with LPF, clean
-logging, and static/ZARU correction, it produces a quieter and better-centered
-final gyro input. In the tested MPU6886 path, a fixed X/Y bias did not transfer
-reliably between same-face runs.
+logging, and stationary gyro-bias correction such as ZARU (Zero Angular Rate
+Update), it produces a quieter and better-centered final gyro input. In the
+tested MPU6886 path, a fixed X/Y bias did not transfer reliably between
+same-face runs.
 
 This is not a population-level MEMS qualification. It is a single-unit,
 firmware-path benchmark. The result is useful because it exposes the failure
